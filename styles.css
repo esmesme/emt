@@ -1,0 +1,169 @@
+/* Reset default margins and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Set the background to black and make the page take up full viewport height */
+body {
+    background-color: black;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: white;
+    text-align: center;
+    padding: 2rem;
+}
+
+/* Back arrow styles */
+.back-arrow {
+    position: fixed;
+    top: 2rem;
+    left: 2rem;
+    color: white;
+    text-decoration: none;
+    font-size: 2rem;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    transition: opacity 0.3s ease;
+}
+
+.back-arrow:hover {
+    opacity: 0.7;
+}
+
+/* Navigation styles */
+.main-nav {
+    position: fixed;
+    top: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+}
+
+.main-nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-transform: lowercase;
+    transition: color 0.3s ease;
+}
+
+.main-nav a:hover {
+    color: #32CD32; /* Lime green */
+}
+
+/* Container for the text */
+.container {
+    text-align: center;
+    padding: 20px;
+}
+
+/* Style the headings */
+h1, h2 {
+    color: white;
+    font-size: 8vw; /* Responsive font size that scales with viewport width */
+    font-weight: bold;
+    line-height: 1.2;
+    cursor: default;
+    letter-spacing: 0.1em; /* Add space between words */
+}
+
+/* Rainbow hover effect */
+span {
+    transition: color 2s;
+    display: inline-block;
+    margin-right: -0.1em; /* Reduce space between letters within words */
+}
+
+span:hover {
+    color: #ED74FA;
+    transition: color 0s;
+}
+
+/* Rainbow color sequence */
+span:nth-child(1n):hover {
+    color: #D201FF;
+}
+span:nth-child(2n):hover {
+    color: #3737C8;
+}
+span:nth-child(3n):hover {
+    color: #00D2FF;
+}
+span:nth-child(4n):hover {
+    color: #1EB41E;
+}
+span:nth-child(5n):hover {
+    color: #FDFF02;
+}
+span:nth-child(6n):hover {
+    color: #FF6E00;
+}
+span:nth-child(7n):hover {
+    color: #FF1F00;
+} 
+
+/*pop up styles*/
+#popup-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+  
+.popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 1rem;
+    border-radius: 5px;
+    box-shadow: 10px 10px 40px lime;
+    min-width: 300px;
+    max-width: 80vw;
+    width: auto;
+    height: auto;
+}
+  
+.close-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    padding: 0.5rem;
+    font-size: 0.7rem;
+    color: lime;
+}
+  
+.popup textarea {
+    width: 100%;
+    margin-top: 30px;
+    padding: 5px;
+    margin-bottom: 5px;
+    min-height: 100px;
+    resize: none;
+    border: none;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: 1.5;
+    overflow: hidden;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
