@@ -6,26 +6,23 @@ const messages = [
   "Kudos for quickly installing panels to create 240 sq ft of storage space in our garage attic!",
   "Esme does GREAT work!!!",
   "Y’all I cannot recommend Esme enough!! She helped me build my dream bookshelf! Bonus: she’s an excellent human and has a super cute doggo! Hire Esme!!",
-  "you make babies smile.",
+  "The custom pantry organization system you built has literally changed our lives. Why did we wait so long?",
   "you just made my day.",
-  "i like the way you are.",
-  "you are stunning.",
-  "i am really glad we met.",
-  "you're a great listener.",
-  "you're inspiring.",
-  "you look great today.",
-  "you smell really good.",
-  "you're one of a kind.",
-  "you radiate warmth.",
-  "you are effervescent.",
-  "your energy is infectious!",
-  "you’re truly a gem",
-  "your Instagram is goals",
-  "you have a cute nose",
-  "and cute eyes",
-  "i’m your biggest fan",
-  "you’re basically superman",
-  "your passion motives me",
+  "The precision in Esme's work speaks volumes—every joint, every finish, every deadline met with remarkable consistency.",
+  "Best investment we've made in our home—period.",
+  "That awkward corner is now our favorite reading nook, thanks to Esme's brilliant solutions and reliable project updates!",
+  "Finally, a carpenter who calls when she says she will! Esme brought our ideas into reality with precision and care.",
+  "Esme is a true craftsman. Her work is impeccable, and her attention to detail is second to none.",
+  "Esme's attention to detail is mind-blowing! The built-in shelving she crafted for our living room is meticulous down to the millimeter. Worth every penny!",
+  "We had an awkward space under our stairs for years. One consultation with Esme and now it's our home's most functional storage AND a conversation piece. Brilliant work!.",
+  "On time, on budget, with consistent updates throughout—and the bookshelves are magnificent.",
+  "The stunning built-ins Esme created for our home office have literally changed how I work. Beautiful, functional, and delivered exactly as promised.",
+  "Esme didn't just build storage—she solved problems I didn't even know how to articulate.",
+  "The quality of Esme's work speaks for itself—literally had three neighbors ask for her number after seeing our new",
+  "Her ability to maximize space is unmatched.",
+  "The floating shelves Esme installed in our bathroom seemed impossible given our weird wall angles, but she made it happen!",
+  "After a disappointing experience with another carpenter, working with Esme was a revelation. She communicates clearly, delivers on time, and her craftsmanship on our kitchen pantry is absolutely flawless.",
+
   
   // Add more messages here
 ];
@@ -48,9 +45,9 @@ function createPopup(message) {
 
   // Set the pop-up's content
   popup.innerHTML = `
-    <input type="text" value="${message}">
-    <button class="close-button">Close</button>
-  `;
+  <textarea>${message}</textarea>
+  <button class="close-button">Close</button>
+`;
 
   popupContainer.appendChild(popup);
 
@@ -67,5 +64,5 @@ function createPopup(message) {
 for (let i = 0; i < 100; i++) {
   setTimeout(function() {
     createPopup(messages[i % messages.length]);
-  }, i * 1000);
+  }, i * 2000);
 }
