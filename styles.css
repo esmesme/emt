@@ -8,42 +8,43 @@
 /* Set the background to black and make the page take up full viewport height */
 body {
     background-color: black;
-    height: 100vh;
+    min-height: 100vh;
     width: 100vw;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: white;
     text-align: center;
     padding: 2rem;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
 }
 
-/* Back arrow styles */
-.back-arrow {
-    position: fixed;
-    top: 2rem;
-    left: 2rem;
-    color: white;
-    text-decoration: none;
-    font-size: 2rem;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    transition: opacity 0.3s ease;
-    z-index: 1000; /* Higher z-index to stay on top */
+/* Main section styles */
+.main-section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    transition: opacity 0.5s ease;
 }
 
-.back-arrow:hover {
-    opacity: 0.7;
+.main-section.fade-out {
+    opacity: 0;
 }
 
 /* Navigation styles */
 .main-nav {
-    position: fixed;
-    top: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 100;
+    margin-bottom: 2rem;
+    transition: opacity 0.5s ease;
+}
+
+.main-nav.fade-out {
+    opacity: 0;
 }
 
 .main-nav a {
@@ -63,6 +64,10 @@ body {
 .container {
     text-align: center;
     padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Style the headings */
@@ -73,6 +78,8 @@ h1, h2 {
     line-height: 1.2;
     cursor: default;
     letter-spacing: 0.1em; /* Add space between words */
+    transition: transform 0.1s ease-out;
+    transform-origin: center center;
 }
 
 /* Rainbow hover effect */
@@ -167,6 +174,216 @@ span:nth-child(7n):hover {
     word-wrap: break-word;
     overflow-wrap: break-word;
     box-sizing: border-box;
+}
+  
+/* Contact section styles */
+.contact-section {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    background-color: black;
+    color: white;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    pointer-events: none;
+    position: relative;
+    z-index: 2;
+}
+
+.contact-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.scrolling-text {
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    margin-bottom: 4rem;
+    color: white;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    text-align: center;
+}
+
+.scrolling-text.visible {
+    opacity: 1;
+}
+
+.scrolling-text.hide {
+    opacity: 0;
+}
+
+.start-button {
+    padding: 1rem 2rem;
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+    font-family: inherit;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    margin-bottom: 4rem;
+    position: fixed;
+    top: calc(50% + 4rem);
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.start-button.visible {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
+.start-button.hide {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+}
+
+.start-button:hover {
+    background-color: white;
+    color: black;
+}
+
+.form-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    position: fixed;
+    top: calc(50% + 4rem);
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.form-container.visible {
+    opacity: 1;
+}
+
+.form-step {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 2rem;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    width: 100%;
+}
+
+/* First step specific styles */
+.form-step:first-child {
+    background-color: transparent;
+    padding: 0;
+    gap: 1rem;
+}
+
+.form-step:first-child .step-prompt {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.form-step:first-child .input-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.form-step:first-child .button-container {
+    margin-top: 1rem;
+}
+
+.step-prompt {
+    font-size: 1.2rem;
+    line-height: 1.5;
+    color: white;
+}
+
+.input-container input[type="text"],
+.input-container input[type="email"],
+.input-container textarea {
+    width: 100%;
+    padding: 1rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    color: white;
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+.input-container input[type="file"] {
+    width: 100%;
+    padding: 1rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    color: white;
+}
+
+.input-container textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.form-button {
+    padding: 0.8rem 1.5rem;
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+    font-family: inherit;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+}
+
+.form-button:hover {
+    background-color: white;
+    color: black;
+}
+
+.form-button.back {
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.form-button.back:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.captcha-container {
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .scrolling-text {
+        font-size: 1.2rem;
+    }
+    
+    .form-step {
+        padding: 1rem;
+    }
+    
+    .step-prompt {
+        font-size: 1rem;
+    }
 }
   
   
