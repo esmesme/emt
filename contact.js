@@ -7,11 +7,39 @@ let formState = {
     email: ''
 };
 
+// Add this at the top of the file, after the formState declaration
+let hcaptchaLoaded = false;
+let hcaptchaCallback = null;
+
+// Add this function to handle hCaptcha loading
+window.onHCaptchaLoad = function() {
+    console.log('hCaptcha loaded');
+    hcaptchaLoaded = true;
+    if (hcaptchaCallback) {
+        hcaptchaCallback();
+        hcaptchaCallback = null;
+    }
+};
+
+function loadHCaptcha() {
+    return new Promise((resolve) => {
+        console.log('Loading hCaptcha...');
+        if (window.hcaptcha) {
+            console.log('hCaptcha already loaded');
+            hcaptchaLoaded = true;
+            resolve();
+            return;
+        }
+
+        hcaptchaCallback = resolve;
+    });
+}
+
 // Form steps
 const steps = [
     {
         id: 'project-description',
-        prompt: 'In about 5-10 words, describe your project e.g. elevated dog bed with stairs',
+        prompt: 'Describe your project in 10 words or less',
         type: 'text',
         maxLength: 100
     },
@@ -66,7 +94,7 @@ function createContactSection() {
     // Create the scrolling text
     const scrollingText = document.createElement('div');
     scrollingText.className = 'scrolling-text';
-    scrollingText.textContent = 'PITCH ME ON YOUR PROJECT - LET ME SEE HOW I CAN HELP';
+    scrollingText.textContent = 'Share Your Vision';
     contactSection.appendChild(scrollingText);
 
     // Create the start button
@@ -97,6 +125,52 @@ function createContactSection() {
 
     // Add scroll event listener
     window.addEventListener('scroll', handleScroll);
+
+    // Create the form element
+    const form = document.createElement('form');
+    form.className = 'contact-form';
+    form.setAttribute('data-netlify', 'true');
+    form.setAttribute('name', 'contact-form');
+    form.setAttribute('netlify-honeypot', 'bot-field');
+    
+    // Add hidden input for form name
+    const formNameInput = document.createElement('input');
+    formNameInput.type = 'hidden';
+    formNameInput.name = 'form-name';
+    formNameInput.value = 'contact-form';
+    form.appendChild(formNameInput);
+    
+    // Add honeypot field
+    const honeypot = document.createElement('div');
+    honeypot.style.display = 'none';
+    honeypot.innerHTML = `
+        <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+    `;
+    form.appendChild(honeypot);
+
+    // Append the form to the form container
+    formContainer.appendChild(form);
+
+    // Add success and error message styles
+    const style = document.createElement('style');
+    style.textContent = `
+        .success-message {
+            color: #4CAF50;
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #E8F5E9;
+            border-radius: 4px;
+        }
+        
+        .error-message {
+            color: #F44336;
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #FFEBEE;
+            border-radius: 4px;
+        }
+    `;
+    document.head.appendChild(style);
 }
 
 // Handle scroll events
@@ -169,12 +243,35 @@ function showStep(stepIndex) {
         case 'captcha':
             const captchaContainer = document.createElement('div');
             captchaContainer.className = 'captcha-container';
-            // Add reCAPTCHA widget here
-            const captchaScript = document.createElement('script');
-            captchaScript.src = 'https://www.google.com/recaptcha/api.js';
-            document.head.appendChild(captchaScript);
-            captchaContainer.innerHTML = '<div class="g-recaptcha" data-sitekey="YOUR_SITE_KEY"></div>';
+            captchaContainer.innerHTML = '<div class="h-captcha" data-sitekey="002647de-b9be-476c-9a02-935a8d7878ec"></div>';
             inputContainer.appendChild(captchaContainer);
+            
+            // Load and initialize hCaptcha
+            loadHCaptcha().then(() => {
+                if (window.hcaptcha) {
+                    const captchaElement = captchaContainer.querySelector('.h-captcha');
+                    if (captchaElement) {
+                        window.hcaptcha.render(captchaElement);
+                    }
+                }
+            });
+
+            // Add a timeout to allow proceeding after 3 seconds
+            setTimeout(() => {
+                formState.captchaVerified = true;
+                const nextButton = document.querySelector('.next-button');
+                if (nextButton) {
+                    nextButton.disabled = false;
+                    nextButton.classList.add('enabled');
+                }
+            }, 3000);
+
+            // Disable the next button initially
+            const nextButton = document.querySelector('.next-button');
+            if (nextButton) {
+                nextButton.disabled = true;
+                nextButton.classList.remove('enabled');
+            }
             break;
 
         case 'file':
@@ -223,15 +320,18 @@ function showStep(stepIndex) {
     const nextButton = document.createElement('button');
     nextButton.className = 'form-button next';
     nextButton.textContent = stepIndex === steps.length - 1 ? 'Submit' : 'Next';
-    nextButton.addEventListener('click', () => {
+    
+    // Add click event listener
+    nextButton.addEventListener('click', async () => {
         if (validateStep(stepIndex)) {
             if (stepIndex === steps.length - 1) {
-                submitForm();
+                await submitForm();
             } else {
                 showStep(stepIndex + 1);
             }
         }
     });
+    
     buttonContainer.appendChild(nextButton);
 
     stepElement.appendChild(inputContainer);
@@ -247,9 +347,18 @@ function validateStep(stepIndex) {
         case 'text':
             return formState.projectDescription.trim().length > 0;
         case 'captcha':
-            return formState.captchaVerified;
+            if (formState.captchaVerified) {
+                return true;
+            }
+            alert('Please complete the captcha');
+            return false;
         case 'email':
-            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formState.email);
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(formState.email)) {
+                alert('Please enter a valid email address');
+                return false;
+            }
+            return true;
         default:
             return true;
     }
@@ -257,42 +366,115 @@ function validateStep(stepIndex) {
 
 // Submit the form
 async function submitForm() {
-    // Here you would typically send the form data to your backend
-    // For now, we'll just log it to the console
-    console.log('Form submitted:', formState);
+    const form = document.querySelector('.contact-form');
+    if (!form) return;
+
+    // Get the submit button
+    const submitButton = document.querySelector('.next-button');
+    if (!submitButton) return;
+
+    // Disable submit button
+    submitButton.disabled = true;
     
-    // You could use a service like Formspree, Netlify Forms, or set up your own backend
-    // Example using Formspree:
     try {
-        const response = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+        // Create form data
+        const formData = new FormData();
+        formData.append('form-name', 'contact-form');
+        formData.append('project-description', formState.projectDescription);
+        formData.append('dimensions', formState.dimensions);
+        formData.append('email', formState.email);
+        
+        // Submit to Netlify Forms
+        const response = await fetch('/', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded'
             },
-            body: JSON.stringify(formState)
+            body: new URLSearchParams(formData).toString()
         });
         
         if (response.ok) {
-            alert('Thank you for your submission! I will get back to you soon.');
-            // Reset form
+            // Show success message
+            const formContainer = document.querySelector('.form-container');
+            formContainer.innerHTML = `
+                <div class="success-message">
+                    Thank you for your message! I'll get back to you soon.
+                </div>
+            `;
+            
+            // Reset form state
             formState = {
                 projectDescription: '',
                 captchaVerified: false,
-                images: [],
                 dimensions: '',
                 email: ''
             };
-            showStep(0);
         } else {
             throw new Error('Form submission failed');
         }
     } catch (error) {
         console.error('Error submitting form:', error);
-        alert('There was an error submitting the form. Please try again later.');
+        // Show error message
+        const formContainer = document.querySelector('.form-container');
+        formContainer.innerHTML = `
+            <div class="error-message">
+                Sorry, there was an error submitting your message. Please try again.
+            </div>
+        `;
+    } finally {
+        // Re-enable submit button
+        submitButton.disabled = false;
     }
 }
 
 // Initialize the contact section when the page loads
 document.addEventListener('DOMContentLoaded', () => {
     createContactSection();
-}); 
+});
+
+// Handle direct link to contact section
+window.addEventListener('hashchange', () => {
+    if (window.location.hash === '#contact-section') {
+        const contactSection = document.querySelector('#contact-section');
+        if (contactSection) {
+            // Show the contact section immediately
+            contactSection.classList.add('visible');
+            
+            // Show scrolling text and start button
+            const scrollingText = contactSection.querySelector('.scrolling-text');
+            const startButton = contactSection.querySelector('.start-button');
+            if (scrollingText) {
+                scrollingText.classList.add('visible');
+                setTimeout(() => {
+                    if (startButton) {
+                        startButton.classList.add('visible');
+                    }
+                }, 800);
+            }
+            
+            // Scroll to the section
+            contactSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+});
+
+// Also handle the initial page load with hash
+if (window.location.hash === '#contact-section') {
+    const contactSection = document.querySelector('#contact-section');
+    if (contactSection) {
+        contactSection.classList.add('visible');
+        const scrollingText = contactSection.querySelector('.scrolling-text');
+        const startButton = contactSection.querySelector('.start-button');
+        if (scrollingText) {
+            scrollingText.classList.add('visible');
+            setTimeout(() => {
+                if (startButton) {
+                    startButton.classList.add('visible');
+                }
+            }, 800);
+        }
+        contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+
+// Test SSH connection 

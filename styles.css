@@ -21,6 +21,22 @@ body {
     position: relative;
 }
 
+/* Back arrow styles */
+.back-arrow {
+    position: fixed;
+    top: 2rem;
+    left: 2rem;
+    color: white;
+    text-decoration: none;
+    font-size: 2rem;
+    z-index: 2;
+    transition: color 0.3s ease;
+}
+
+.back-arrow:hover {
+    color: #32CD32; /* Lime green */
+}
+
 /* Main section styles */
 .main-section {
     min-height: 100vh;
@@ -41,6 +57,9 @@ body {
 .main-nav {
     margin-bottom: 2rem;
     transition: opacity 0.5s ease;
+    display: flex;
+    gap: 8rem; /* Increased from 2rem to 8rem for more space between links */
+    justify-content: center;
 }
 
 .main-nav.fade-out {
@@ -48,12 +67,13 @@ body {
 }
 
 .main-nav a {
-    color: white;
+    color: rgba(255, 255, 255, 0.7); /* 30% gray (70% white) */
     text-decoration: none;
-    font-size: 1.5rem;
+    font-size: 0.75rem; /* Half of 1.5rem */
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     text-transform: lowercase;
     transition: color 0.3s ease;
+    padding: 0 2rem; /* Added horizontal padding to each link */
 }
 
 .main-nav a:hover {
@@ -82,40 +102,50 @@ h1, h2 {
     transform-origin: center center;
 }
 
-/* Rainbow hover effect */
+/* Wood grain hover effect */
 span {
-    transition: color 2s;
+    transition: all 0.3s ease;
     display: inline-block;
-    margin-right: -0.1em; /* Reduce space between letters within words */
+    margin-right: -0.1em;
+    background: transparent;
+    color: white;
+    position: relative;
 }
 
 span:hover {
-    color: #ED74FA;
-    transition: color 0s;
+    background-size: 200% 200%;
+    background-position: center;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: woodGrain 2s ease infinite;
 }
 
-/* Rainbow color sequence */
-span:nth-child(1n):hover {
-    color: #D201FF;
+/* Wood grain textures for each letter */
+span:nth-child(1):hover { background-image: url('textures/wood-grain/wood-grain-1.jpg'); }
+span:nth-child(2):hover { background-image: url('textures/wood-grain/wood-grain-2.jpg'); }
+span:nth-child(3):hover { background-image: url('textures/wood-grain/wood-grain-3.jpg'); }
+span:nth-child(4):hover { background-image: url('textures/wood-grain/wood-grain-4.jpg'); }
+span:nth-child(5):hover { background-image: url('textures/wood-grain/wood-grain-5.jpg'); }
+span:nth-child(6):hover { background-image: url('textures/wood-grain/wood-grain-6.jpg'); }
+span:nth-child(7):hover { background-image: url('textures/wood-grain/wood-grain-7.jpg'); }
+span:nth-child(8):hover { background-image: url('textures/wood-grain/wood-grain-8.jpg'); }
+span:nth-child(9):hover { background-image: url('textures/wood-grain/wood-grain-9.jpg'); }
+span:nth-child(10):hover { background-image: url('textures/wood-grain/wood-grain-10.jpg'); }
+span:nth-child(11):hover { background-image: url('textures/wood-grain/wood-grain-11.jpg'); }
+span:nth-child(12):hover { background-image: url('textures/wood-grain/wood-grain-12.jpg'); }
+
+@keyframes woodGrain {
+    0% {
+        background-position: 0% 0%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
 }
-span:nth-child(2n):hover {
-    color: #3737C8;
-}
-span:nth-child(3n):hover {
-    color: #00D2FF;
-}
-span:nth-child(4n):hover {
-    color: #1EB41E;
-}
-span:nth-child(5n):hover {
-    color: #FDFF02;
-}
-span:nth-child(6n):hover {
-    color: #FF6E00;
-}
-span:nth-child(7n):hover {
-    color: #FF1F00;
-} 
 
 /*pop up styles*/
 #popup-container {
@@ -193,9 +223,17 @@ span:nth-child(7n):hover {
     pointer-events: none;
     position: relative;
     z-index: 2;
+    margin-top: 100vh; /* Add this to position it below the main section */
 }
 
 .contact-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* Add styles for when the contact section is targeted by the URL hash */
+.contact-section:target {
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;
@@ -269,6 +307,7 @@ span:nth-child(7n):hover {
     top: calc(50% + 4rem);
     left: 50%;
     transform: translate(-50%, 0);
+    z-index: 10; /* Add this to ensure it's above other elements */
 }
 
 .form-container.visible {
@@ -283,6 +322,7 @@ span:nth-child(7n):hover {
     background-color: rgba(255, 255, 255, 0.05);
     border-radius: 8px;
     width: 100%;
+    margin-top: 2rem; /* Add this to give some space from the top */
 }
 
 /* First step specific styles */
@@ -345,14 +385,27 @@ span:nth-child(7n):hover {
     background-color: transparent;
     border: 1px solid white;
     color: white;
-    font-family: inherit;
-    font-size: 1rem;
     cursor: pointer;
     transition: all 0.3s ease;
+    font-family: inherit;
+    font-size: 1rem;
+    margin: 0 0.5rem;
     border-radius: 4px;
 }
 
-.form-button:hover {
+.form-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.form-button.enabled {
+    opacity: 1;
+    cursor: pointer;
+    border-color: white;
+}
+
+.form-button:hover:not(:disabled) {
     background-color: white;
     color: black;
 }
@@ -365,10 +418,29 @@ span:nth-child(7n):hover {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
+/* Add specific styles for the submit button */
+.form-button.next:last-child {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-width: 2px;
+    font-weight: bold;
+}
+
+.form-button.next:last-child:hover:not(:disabled) {
+    background-color: white;
+    color: black;
+}
+
 .captcha-container {
     display: flex;
     justify-content: center;
     margin: 1rem 0;
+    min-height: 65px; /* hCaptcha widget height */
+}
+
+/* Style the hCaptcha iframe container */
+.h-captcha {
+    transform: scale(0.9);
+    transform-origin: center;
 }
 
 /* Responsive adjustments */
@@ -384,6 +456,28 @@ span:nth-child(7n):hover {
     .step-prompt {
         font-size: 1rem;
     }
+}
+
+.success-message, .error-message {
+    padding: 2rem;
+    border-radius: 8px;
+    margin: 2rem auto;
+    max-width: 600px;
+    text-align: center;
+    font-size: 1.2rem;
+    line-height: 1.5;
+}
+
+.success-message {
+    background-color: rgba(76, 175, 80, 0.1);
+    border: 1px solid rgba(76, 175, 80, 0.3);
+    color: #4CAF50;
+}
+
+.error-message {
+    background-color: rgba(244, 67, 54, 0.1);
+    border: 1px solid rgba(244, 67, 54, 0.3);
+    color: #F44336;
 }
   
   

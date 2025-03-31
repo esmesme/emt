@@ -5,7 +5,7 @@ const messages = [
   "Very beautiful professional job well done.",
   "Kudos for quickly installing panels to create 240 sq ft of storage space in our garage attic!",
   "Esme does GREAT work!!!",
-  "Y’all I cannot recommend Esme enough!! She helped me build my dream bookshelf! Bonus: she’s an excellent human and has a super cute doggo! Hire Esme!!",
+  "Y'all I cannot recommend Esme enough!! She helped me build my dream bookshelf! Bonus: she's an excellent human and has a super cute doggo! Hire Esme!!",
   "The custom pantry organization system you built has literally changed our lives. Why did we wait so long?",
   "you just made my day.",
   "The precision in Esme's work speaks volumes—every joint, every finish, every deadline met with remarkable consistency.",
