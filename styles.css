@@ -93,7 +93,7 @@ body {
 /* Style the headings */
 h1, h2 {
     color: white;
-    font-size: 8vw; /* Responsive font size that scales with viewport width */
+    font-size: 10vw; /* Responsive font size that scales with viewport width */
     font-weight: bold;
     line-height: 1.2;
     cursor: default;
@@ -113,12 +113,11 @@ span {
 }
 
 span:hover {
-    background-size: 200% 200%;
+    background-size: cover;
     background-position: center;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    animation: woodGrain 2s ease infinite;
 }
 
 /* Wood grain textures for each letter */
@@ -134,18 +133,6 @@ span:nth-child(9):hover { background-image: url('textures/wood-grain/wood-grain-
 span:nth-child(10):hover { background-image: url('textures/wood-grain/wood-grain-10.jpg'); }
 span:nth-child(11):hover { background-image: url('textures/wood-grain/wood-grain-11.jpg'); }
 span:nth-child(12):hover { background-image: url('textures/wood-grain/wood-grain-12.jpg'); }
-
-@keyframes woodGrain {
-    0% {
-        background-position: 0% 0%;
-    }
-    50% {
-        background-position: 100% 100%;
-    }
-    100% {
-        background-position: 0% 0%;
-    }
-}
 
 /*pop up styles*/
 #popup-container {
