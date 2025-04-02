@@ -104,7 +104,7 @@ h1, h2 {
 
 /* Wood grain hover effect */
 span {
-    transition: all 0.3s ease;
+    transition: all 0.0s ease;
     display: inline-block;
     margin-right: -0.1em;
     background: transparent;
@@ -467,7 +467,31 @@ span:nth-child(12):hover { background-image: url('textures/wood-grain/wood-grain
     color: #F44336;
 }
   
+.p5Canvas {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#defaultCanvas0 {
+    width: auto!important;
+    height: auto!important;
+   display: none; /* Hide the canvas initially */
+   position: relative; /* Position it relative to its normal position */
+   top: 100vh; /* Move it down by the full viewport height */ 
+}
+
+
+/*
+#startButton {
+    
+    position: absolute;
+    top: 20px;
+    left: 20px;
+  z-index: 4;
   
+}
   
   
   
