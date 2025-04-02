@@ -24,15 +24,12 @@ function setup() {
 
   // Add event listener to start button
   let startButton = document.getElementById('startButton');
-  startButton.addEventListener('click', startAnimation);
-
-  
-  startButton.addEventListener('click', function() {
-    canvas.scrollIntoView({ behavior: 'smooth', block: 'center' }); // Scroll to the canvas and center it
-    startButton.style.zIndex = '0'; // Change z-index of the button
+startButton.addEventListener('click', function() {
+    startAnimation(); // Start the animation
     canvas.style.display = 'block'; // Show the canvas
-    
+    canvas.scrollIntoView({ behavior: 'smooth', block: 'center' }); // Scroll to the canvas and center it
 });
+
   document.addEventListener('DOMContentLoaded', function() {
     const startButton = document.querySelector('.press-button'); // Assuming the button has the class 'press-button'
     const canvas = document.getElementById('defaultcanvas0');
