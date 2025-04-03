@@ -121,18 +121,18 @@ span:hover {
 }
 
 /* Wood grain textures for each letter */
-span:nth-child(1):hover { background-image: url('textures/wood-grain/wood-grain-1.jpg'); }
-span:nth-child(2):hover { background-image: url('textures/wood-grain/wood-grain-2.jpg'); }
-span:nth-child(3):hover { background-image: url('textures/wood-grain/wood-grain-3.jpg'); }
-span:nth-child(4):hover { background-image: url('textures/wood-grain/wood-grain-4.jpg'); }
-span:nth-child(5):hover { background-image: url('textures/wood-grain/wood-grain-5.jpg'); }
-span:nth-child(6):hover { background-image: url('textures/wood-grain/wood-grain-6.jpg'); }
-span:nth-child(7):hover { background-image: url('textures/wood-grain/wood-grain-7.jpg'); }
-span:nth-child(8):hover { background-image: url('textures/wood-grain/wood-grain-8.jpg'); }
-span:nth-child(9):hover { background-image: url('textures/wood-grain/wood-grain-9.jpg'); }
-span:nth-child(10):hover { background-image: url('textures/wood-grain/wood-grain-10.jpg'); }
-span:nth-child(11):hover { background-image: url('textures/wood-grain/wood-grain-11.jpg'); }
-span:nth-child(12):hover { background-image: url('textures/wood-grain/wood-grain-12.jpg'); }
+span:nth-child(1):hover { background-image: url('https://github.com/esmesme/emt/blob/main/textures/wood-grain/wood-grain-1.jpg'); }
+span:nth-child(2):hover { background-image: url('https://github.com/esmesme/emt/blob/main/textures/wood-grain/wood-grain-2.jpg'); }
+span:nth-child(3):hover { background-image: url('https://github.com/esmesme/emt/blob/main/textures/wood-grain/wood-grain-3.jpg'); }
+span:nth-child(4):hover { background-image: url('https://github.com/esmesme/emt/blob/main/textures/wood-grain/wood-grain-4.jpg'); }
+span:nth-child(5):hover { background-image: url('https://github.com/esmesme/emt/blob/main/textures/wood-grain/wood-grain-5.jpg'); }
+span:nth-child(6):hover { background-image: url('https://github.com/esmesme/emt/blob/main/textures/wood-grain/wood-grain-6.jpg'); }
+span:nth-child(7):hover { background-image: url('https://github.com/esmesme/emt/blob/main/textures/wood-grain/wood-grain-7.jpg'); }
+span:nth-child(8):hover { background-image: url('https://github.com/esmesme/emt/blob/main/textures/wood-grain/wood-grain-8.jpg'); }
+span:nth-child(9):hover { background-image: url('https://github.com/esmesme/emt/blob/main/textures/wood-grain/wood-grain-9.jpg'); }
+span:nth-child(10):hover { background-image: url('https://github.com/esmesme/emt/blob/main/textures/wood-grain/wood-grain-10.jpg'); }
+span:nth-child(11):hover { background-image: url('https://github.com/esmesme/emt/blob/main/textures/wood-grain/wood-grain-11.jpg'); }
+span:nth-child(12):hover { background-image: url('https://github.com/esmesme/emt/blob/main/textures/wood-grain/wood-grain-12.jpg'); }
 
 /*pop up styles*/
 #popup-container {
