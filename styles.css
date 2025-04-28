@@ -38,46 +38,40 @@ body {
 }
 
 /* Main section styles */
-.main-section {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    z-index: 1;
-    transition: opacity 0.5s ease;
-}
-
-.main-section.fade-out {
+.main-nav{
+    
+    position: fixed;
+    top: 50vh; /* Position it halfway down the viewport */
+    left: 0;
+    right: 0;
+    padding: 2rem;
     opacity: 0;
+    
+    z-index: 1000;
+    transform: translateY(20px);
+
+ 
 }
 
-/* Navigation styles */
-.main-nav {
-    margin-bottom: 2rem;
-    transition: opacity 0.5s ease;
-    display: flex;
-    gap: 8rem; /* Increased from 2rem to 8rem for more space between links */
-    justify-content: center;
-}
-
-.main-nav.fade-out {
-    opacity: 0;
+.main-nav.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .main-nav a {
-    color: rgba(255, 255, 255, 0.7); /* 30% gray (70% white) */
+    color: black;
     text-decoration: none;
-    font-size: 0.75rem; /* Half of 1.5rem */
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 1.2rem;
     text-transform: lowercase;
-    transition: color 0.3s ease;
-    padding: 0 2rem; /* Added horizontal padding to each link */
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    background-color: white;
+    gap: 12rem; 
 }
 
 .main-nav a:hover {
-    color: #32CD32; /* Lime green */
+    background-color: #9595ff; /* Lilac purple */
+    color: black;
 }
 
 /* Container for the text */
@@ -118,6 +112,36 @@ span:hover {
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+}
+
+/* Fallback rainbow colors when images fail to load */
+span:hover:not([style*="background-image"]) {
+    color: #ED74FA;
+    transition: color 0s;
+    transform: none;
+    box-shadow: none;
+}
+
+span:nth-child(1n):hover:not([style*="background-image"]) {
+    color: #D201FF;
+}
+span:nth-child(2n):hover:not([style*="background-image"]) {
+    color: #3737C8;
+}
+span:nth-child(3n):hover:not([style*="background-image"]) {
+    color: #00D2FF;
+}
+span:nth-child(4n):hover:not([style*="background-image"]) {
+    color: #1EB41E;
+}
+span:nth-child(5n):hover:not([style*="background-image"]) {
+    color: #FDFF02;
+}
+span:nth-child(6n):hover:not([style*="background-image"]) {
+    color: #FF6E00;
+}
+span:nth-child(7n):hover:not([style*="background-image"]) {
+    color: #FF1F00;
 }
 
 /* Wood grain textures for each letter */
@@ -301,15 +325,26 @@ span:nth-child(12):hover { background-image: url('https://github.com/esmesme/emt
     opacity: 1;
 }
 
-.form-step {
+.formstep {
+    display: none;
+    padding: 2rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 2rem auto;
+    max-width: 600px;
+    min-height: 400px;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
-    padding: 2rem;
-    background-color: rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
-    width: 100%;
-    margin-top: 2rem; /* Add this to give some space from the top */
+    justify-content: center;
+    align-items: center;
+}
+
+.formstep.active {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 /* First step specific styles */
@@ -340,31 +375,86 @@ span:nth-child(12):hover { background-image: url('https://github.com/esmesme/emt
     color: white;
 }
 
-.input-container input[type="text"],
-.input-container input[type="email"],
-.input-container textarea {
-    width: 100%;
-    padding: 1rem;
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+/* Form validation styles */
+.input-container {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.error-message {
+    color: #ff0000;
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    background-color: #fff5f5;
     border-radius: 4px;
-    color: white;
-    font-family: inherit;
+    border: 1px solid #ff0000;
+}
+
+input.error,
+textarea.error {
+    border-color: #ff0000;
+    background-color: #fff5f5;
+}
+
+.char-counter {
+    text-align: right;
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+    color: #666;
+}
+
+.char-counter.warning {
+    color: #ff6b00;
+}
+
+.char-counter.error {
+    color: #ff0000;
+}
+
+/* File input styles */
+input[type="file"] {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+}
+
+input[type="file"]:hover {
+    border-color: #666;
+}
+
+input[type="file"]:focus {
+    outline: none;
+    border-color: #000;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Input and textarea styles */
+input[type="text"],
+input[type="email"],
+textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
     font-size: 1rem;
+    transition: border-color 0.3s ease;
 }
 
-.input-container input[type="file"] {
-    width: 100%;
-    padding: 1rem;
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 4px;
-    color: white;
+input[type="text"]:hover,
+input[type="email"]:hover,
+textarea:hover {
+    border-color: #666;
 }
 
-.input-container textarea {
-    min-height: 100px;
-    resize: vertical;
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+    outline: none;
+    border-color: #000;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
 }
 
 .form-button {
@@ -417,31 +507,48 @@ span:nth-child(12):hover { background-image: url('https://github.com/esmesme/emt
     color: black;
 }
 
+/* Captcha container styles */
 .captcha-container {
     display: flex;
     justify-content: center;
+    align-items: center;
+    min-height: 80px;
     margin: 1rem 0;
-    min-height: 65px; /* hCaptcha widget height */
+    padding: 1rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    position: relative;
 }
 
-/* Style the hCaptcha iframe container */
-.h-captcha {
+.captcha-container.error {
+    background-color: rgba(255, 0, 0, 0.1);
+    border: 1px solid rgba(255, 0, 0, 0.3);
+}
+
+.captcha-container .h-captcha {
     transform: scale(0.9);
     transform-origin: center;
 }
 
-/* Responsive adjustments */
+/* Loading state for captcha */
+.captcha-container.loading::after {
+    content: 'Loading captcha...';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* Responsive adjustments for captcha */
 @media (max-width: 768px) {
-    .scrolling-text {
-        font-size: 1.2rem;
+    .captcha-container {
+        min-height: 100px;
     }
     
-    .form-step {
-        padding: 1rem;
-    }
-    
-    .step-prompt {
-        font-size: 1rem;
+    .captcha-container .h-captcha {
+        transform: scale(0.8);
     }
 }
 
@@ -482,6 +589,105 @@ span:nth-child(12):hover { background-image: url('https://github.com/esmesme/emt
    top: 100vh; /* Move it down by the full viewport height */ 
 }
 
+/* File upload styles */
+.file-upload-container {
+    position: relative;
+    margin: 1rem 0;
+}
+
+.file-upload-label {
+    display: block;
+    padding: 1rem;
+    border: 2px dashed #ccc;
+    border-radius: 4px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.file-upload-label:hover {
+    border-color: #666;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.file-upload-label.dragover {
+    border-color: #000;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.file-preview-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.file-preview {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.file-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.file-preview .remove-button {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: rgba(255, 0, 0, 0.7);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+}
+
+.file-upload-progress {
+    margin-top: 1rem;
+    height: 4px;
+    background-color: #eee;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.file-upload-progress-bar {
+    height: 100%;
+    background-color: #000;
+    transition: width 0.3s ease;
+}
+
+/* Loading states */
+.loading {
+    position: relative;
+    pointer-events: none;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.1);
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.5; }
+    50% { opacity: 0.8; }
+    100% { opacity: 0.5; }
+}
 
 /*
 #startButton {

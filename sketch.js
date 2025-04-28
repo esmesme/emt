@@ -24,18 +24,27 @@ function setup() {
 
   // Add event listener to start button
   let startButton = document.getElementById('startButton');
-startButton.addEventListener('click', function() {
+  startButton.addEventListener('click', function() {
     startAnimation(); // Start the animation
-    canvas.style.display = 'block'; // Show the canvas
-    canvas.scrollIntoView({ behavior: 'smooth', block: 'center' }); // Scroll to the canvas and center it
-});
+    
+    // Get the canvas element
+    const canvas = document.getElementById('defaultcanvas0');
+    
+    // Make canvas visible
+    canvas.style.display = 'block';
+    
+    // Scroll to the canvas with a slight delay to ensure it's visible
+    setTimeout(() => {
+      canvas.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'center'
+      });
+    }, 100);
+  });
 
   document.addEventListener('DOMContentLoaded', function() {
-    const startButton = document.querySelector('.press-button'); // Assuming the button has the class 'press-button'
-    const canvas = document.getElementById('defaultcanvas0');
-
-
-});
+    const startButton = document.querySelector('.startButton'); // Assuming the button has the class 'press-button'
+  });
 }
 
 function draw() {
@@ -50,6 +59,11 @@ function draw() {
 function startAnimation() {
   animationStarted = true;
   
+  // Make canvas visible if not already done by the click handler
+  const canvas = document.getElementById('defaultcanvas0');
+  if (canvas) {
+    canvas.style.display = 'block';
+  }
 }
 
 // Worm class
@@ -58,8 +72,7 @@ class Worm {
     this.x = random(50, 550); // Initial x position
     this.y = random(550, 550); // Initial y position
     this.speed = random(1, 3); // Speed of movement
-    this.text = random(["now accepting cryptocurrency payments"
-    ]); // Random text
+    this.text = random(["now accepting cryptocurrency payments"]); // Random text
     this.angle = random(-PI, PI); // Initial angle of movement
     this.verticalSpeed = random(-4, 4); // Random vertical speed
   }

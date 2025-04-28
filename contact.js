@@ -7,9 +7,36 @@ let formState = {
     email: ''
 };
 
+// Validation rules for each field
+const validationRules = {
+    projectDescription: {
+        minLength: 1,
+        maxLength: 100,
+        pattern: /^[\w\s.,!?-]{1,100}$/,
+        errorMessage: 'Please enter a valid project description (1-100 characters, letters, numbers, and basic punctuation only)'
+    },
+    dimensions: {
+        minLength: 1,
+        maxLength: 250,
+        pattern: /^[\w\s.,!?()-]{1,250}$/,
+        errorMessage: 'Please enter valid dimensions (1-250 characters, letters, numbers, and basic punctuation only)'
+    },
+    email: {
+        pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+        errorMessage: 'Please enter a valid email address'
+    },
+    images: {
+        maxSize: 5 * 1024 * 1024, // 5MB
+        allowedTypes: ['image/jpeg', 'image/png', 'image/gif'],
+        maxCount: 5,
+        errorMessage: 'Please upload 1-5 images (JPEG, PNG, or GIF) under 5MB each'
+    }
+};
+
 // Add this at the top of the file, after the formState declaration
 let hcaptchaLoaded = false;
 let hcaptchaCallback = null;
+let hcaptchaWidgetId = null;
 
 // Add this function to handle hCaptcha loading
 window.onHCaptchaLoad = function() {
@@ -22,7 +49,7 @@ window.onHCaptchaLoad = function() {
 };
 
 function loadHCaptcha() {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
         console.log('Loading hCaptcha...');
         if (window.hcaptcha) {
             console.log('hCaptcha already loaded');
@@ -31,7 +58,15 @@ function loadHCaptcha() {
             return;
         }
 
-        hcaptchaCallback = resolve;
+        // Set a timeout to handle loading failure
+        const timeout = setTimeout(() => {
+            reject(new Error('hCaptcha failed to load'));
+        }, 10000); // 10 second timeout
+
+        hcaptchaCallback = () => {
+            clearTimeout(timeout);
+            resolve();
+        };
     });
 }
 
@@ -227,6 +262,26 @@ function showStep(stepIndex) {
     const inputContainer = document.createElement('div');
     inputContainer.className = 'input-container';
 
+    // Add character counter for text inputs
+    const addCharCounter = (input, maxLength) => {
+        const counter = document.createElement('div');
+        counter.className = 'char-counter';
+        counter.style.textAlign = 'right';
+        counter.style.fontSize = '0.8rem';
+        counter.style.marginTop = '0.5rem';
+        counter.style.color = '#666';
+        
+        const updateCounter = () => {
+            const current = input.value.length;
+            counter.textContent = `${current}/${maxLength} characters`;
+            counter.style.color = current > maxLength ? '#ff0000' : '#666';
+        };
+        
+        input.addEventListener('input', updateCounter);
+        updateCounter();
+        inputContainer.appendChild(counter);
+    };
+
     switch (step.type) {
         case 'text':
             const textInput = document.createElement('input');
@@ -236,8 +291,10 @@ function showStep(stepIndex) {
             textInput.placeholder = 'Type your project description here...';
             textInput.addEventListener('input', (e) => {
                 formState.projectDescription = e.target.value;
+                validateInput(textInput, 'projectDescription');
             });
             inputContainer.appendChild(textInput);
+            addCharCounter(textInput, step.maxLength);
             break;
 
         case 'captcha':
@@ -247,60 +304,77 @@ function showStep(stepIndex) {
             inputContainer.appendChild(captchaContainer);
             
             // Load and initialize hCaptcha
-            loadHCaptcha().then(() => {
-                if (window.hcaptcha) {
-                    const captchaElement = captchaContainer.querySelector('.h-captcha');
-                    if (captchaElement) {
-                        window.hcaptcha.render(captchaElement);
-                    }
-                }
-            });
-
-            // Add a timeout to allow proceeding after 3 seconds
-            setTimeout(() => {
-                formState.captchaVerified = true;
-                const nextButton = document.querySelector('.next-button');
-                if (nextButton) {
-                    nextButton.disabled = false;
-                    nextButton.classList.add('enabled');
-                }
-            }, 3000);
-
-            // Disable the next button initially
-            const nextButton = document.querySelector('.next-button');
-            if (nextButton) {
-                nextButton.disabled = true;
-                nextButton.classList.remove('enabled');
-            }
+            loadHCaptcha()
+                .then(() => {
+                    hcaptchaWidgetId = window.hcaptcha.render('h-captcha', {
+                        sitekey: '002647de-b9be-476c-9a02-935a8d7878ec',
+                        callback: (token) => {
+                            formState.captchaVerified = true;
+                            clearError(captchaContainer);
+                            validateStep(stepIndex);
+                        },
+                        'error-callback': () => {
+                            formState.captchaVerified = false;
+                            showError(captchaContainer, 'Please complete the captcha verification');
+                        },
+                        'expired-callback': () => {
+                            formState.captchaVerified = false;
+                            showError(captchaContainer, 'Captcha expired. Please verify again.');
+                        }
+                    });
+                })
+                .catch((error) => {
+                    console.error('Failed to load hCaptcha:', error);
+                    showError(captchaContainer, 'Failed to load captcha. Please refresh the page and try again.');
+                });
             break;
 
         case 'file':
+            const fileContainer = document.createElement('div');
+            fileContainer.className = 'file-upload-container';
+            
+            const fileLabel = document.createElement('label');
+            fileLabel.className = 'file-upload-label';
+            fileLabel.textContent = 'Drag & drop images here or click to browse';
+            
             const fileInput = document.createElement('input');
             fileInput.type = 'file';
-            fileInput.multiple = step.multiple;
-            fileInput.accept = step.accept;
+            fileInput.multiple = true;
+            fileInput.accept = 'image/*';
+            fileInput.style.display = 'none';
             fileInput.addEventListener('change', (e) => {
-                formState.images = Array.from(e.target.files);
+                handleFileUpload(e.target.files);
             });
-            inputContainer.appendChild(fileInput);
+            
+            fileLabel.appendChild(fileInput);
+            fileContainer.appendChild(fileLabel);
+            inputContainer.appendChild(fileContainer);
+            
+            // Setup drag and drop
+            setupFileUpload();
             break;
 
         case 'textarea':
             const textarea = document.createElement('textarea');
             textarea.maxLength = step.maxLength;
             textarea.value = formState.dimensions;
+            textarea.placeholder = 'Enter dimensions here...';
             textarea.addEventListener('input', (e) => {
                 formState.dimensions = e.target.value;
+                validateInput(textarea, 'dimensions');
             });
             inputContainer.appendChild(textarea);
+            addCharCounter(textarea, step.maxLength);
             break;
 
         case 'email':
             const emailInput = document.createElement('input');
             emailInput.type = 'email';
             emailInput.value = formState.email;
+            emailInput.placeholder = 'Enter your email address...';
             emailInput.addEventListener('input', (e) => {
                 formState.email = e.target.value;
+                validateInput(emailInput, 'email');
             });
             inputContainer.appendChild(emailInput);
             break;
@@ -345,85 +419,160 @@ function validateStep(stepIndex) {
     
     switch (step.type) {
         case 'text':
-            return formState.projectDescription.trim().length > 0;
+            return validateInput(document.querySelector(`input[name="${step.id}"]`), step.id);
         case 'captcha':
-            if (formState.captchaVerified) {
-                return true;
+            if (!hcaptchaLoaded) {
+                showError(document.querySelector('.captcha-container'), 'Captcha is still loading. Please wait.');
+                return false;
             }
-            alert('Please complete the captcha');
-            return false;
-        case 'email':
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(formState.email)) {
-                alert('Please enter a valid email address');
+            if (!formState.captchaVerified) {
+                showError(document.querySelector('.captcha-container'), 'Please complete the captcha verification');
                 return false;
             }
             return true;
+        case 'email':
+            return validateInput(document.querySelector(`input[name="${step.id}"]`), step.id);
+        case 'file':
+            return validateFiles(formState.images);
+        case 'textarea':
+            return validateInput(document.querySelector(`textarea[name="${step.id}"]`), step.id);
         default:
             return true;
     }
 }
 
+// Validation functions
+function validateInput(input, fieldName) {
+    const rules = validationRules[fieldName];
+    const value = input.value.trim();
+    let isValid = true;
+    let errorMessage = '';
+
+    if (rules.minLength && value.length < rules.minLength) {
+        isValid = false;
+        errorMessage = `Minimum ${rules.minLength} characters required`;
+    } else if (rules.maxLength && value.length > rules.maxLength) {
+        isValid = false;
+        errorMessage = `Maximum ${rules.maxLength} characters allowed`;
+    } else if (rules.pattern && !rules.pattern.test(value)) {
+        isValid = false;
+        errorMessage = rules.errorMessage;
+    }
+
+    if (!isValid) {
+        showError(input, errorMessage);
+    } else {
+        clearError(input);
+    }
+
+    return isValid;
+}
+
+function validateFiles(files) {
+    const rules = validationRules.images;
+    let isValid = true;
+    let errorMessage = '';
+
+    if (files.length > rules.maxCount) {
+        isValid = false;
+        errorMessage = `Maximum ${rules.maxCount} files allowed`;
+    } else {
+        for (const file of files) {
+            if (file.size > rules.maxSize) {
+                isValid = false;
+                errorMessage = 'File size exceeds 5MB limit';
+                break;
+            }
+            if (!rules.allowedTypes.includes(file.type)) {
+                isValid = false;
+                errorMessage = 'Only JPEG, PNG, and GIF files are allowed';
+                break;
+            }
+        }
+    }
+
+    if (!isValid) {
+        showError(document.querySelector('input[type="file"]'), errorMessage);
+    } else {
+        clearError(document.querySelector('input[type="file"]'));
+    }
+
+    return isValid;
+}
+
+function showError(input, message) {
+    let errorElement = input.nextElementSibling;
+    if (!errorElement || !errorElement.classList.contains('error-message')) {
+        errorElement = document.createElement('div');
+        errorElement.className = 'error-message';
+        input.parentNode.insertBefore(errorElement, input.nextSibling);
+    }
+    errorElement.textContent = message;
+    input.classList.add('error');
+}
+
+function clearError(input) {
+    const errorElement = input.nextElementSibling;
+    if (errorElement && errorElement.classList.contains('error-message')) {
+        errorElement.remove();
+    }
+    input.classList.remove('error');
+}
+
 // Submit the form
 async function submitForm() {
-    const form = document.querySelector('.contact-form');
-    if (!form) return;
-
-    // Get the submit button
-    const submitButton = document.querySelector('.next-button');
-    if (!submitButton) return;
-
-    // Disable submit button
-    submitButton.disabled = true;
-    
     try {
-        // Create form data
+        // Create FormData object
         const formData = new FormData();
-        formData.append('form-name', 'contact-form');
-        formData.append('project-description', formState.projectDescription);
-        formData.append('dimensions', formState.dimensions);
-        formData.append('email', formState.email);
         
-        // Submit to Netlify Forms
+        // Add form fields
+        formData.append('form-name', 'contact-form');
+        formData.append('projectDescription', formState.projectDescription);
+        formData.append('email', formState.email);
+        formData.append('dimensions', formState.dimensions);
+        
+        // Add files
+        for (let i = 0; i < formState.images.length; i++) {
+            formData.append('images', formState.images[i]);
+        }
+        
+        // Add honeypot field
+        formData.append('bot-field', '');
+
+        // Show loading state
+        const submitButton = document.querySelector('.form-button.next:last-child');
+        const originalText = submitButton.textContent;
+        submitButton.disabled = true;
+        submitButton.textContent = 'Submitting...';
+
+        // Submit to Netlify
         const response = await fetch('/', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: new URLSearchParams(formData).toString()
+            body: formData
         });
-        
+
         if (response.ok) {
             // Show success message
             const formContainer = document.querySelector('.form-container');
             formContainer.innerHTML = `
                 <div class="success-message">
-                    Thank you for your message! I'll get back to you soon.
+                    <h2>Thank you!</h2>
+                    <p>Your submission has been received. I'll get back to you soon.</p>
                 </div>
             `;
-            
-            // Reset form state
-            formState = {
-                projectDescription: '',
-                captchaVerified: false,
-                dimensions: '',
-                email: ''
-            };
         } else {
             throw new Error('Form submission failed');
         }
     } catch (error) {
         console.error('Error submitting form:', error);
-        // Show error message
         const formContainer = document.querySelector('.form-container');
         formContainer.innerHTML = `
             <div class="error-message">
-                Sorry, there was an error submitting your message. Please try again.
+                <h2>Oops!</h2>
+                <p>Something went wrong. Please try again later.</p>
+                <button class="form-button" onclick="location.reload()">Try Again</button>
             </div>
         `;
-    } finally {
-        // Re-enable submit button
-        submitButton.disabled = false;
     }
 }
 
@@ -474,6 +623,96 @@ if (window.location.hash === '#contact-section') {
             }, 800);
         }
         contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+
+// File upload handling
+function handleFileUpload(files) {
+    const container = document.querySelector('.file-upload-container');
+    if (!container) return;
+
+    // Validate files
+    if (!validateFiles(files)) return;
+
+    // Clear existing previews
+    const previewContainer = container.querySelector('.file-preview-container');
+    if (previewContainer) {
+        previewContainer.innerHTML = '';
+    }
+
+    // Create preview container if it doesn't exist
+    if (!previewContainer) {
+        const newPreviewContainer = document.createElement('div');
+        newPreviewContainer.className = 'file-preview-container';
+        container.appendChild(newPreviewContainer);
+    }
+
+    // Create previews for each file
+    Array.from(files).forEach((file, index) => {
+        const preview = document.createElement('div');
+        preview.className = 'file-preview';
+        
+        const img = document.createElement('img');
+        img.src = URL.createObjectURL(file);
+        
+        const removeButton = document.createElement('button');
+        removeButton.className = 'remove-button';
+        removeButton.innerHTML = '×';
+        removeButton.onclick = () => {
+            preview.remove();
+            formState.images.splice(index, 1);
+            validateStep(currentStep);
+        };
+        
+        preview.appendChild(img);
+        preview.appendChild(removeButton);
+        container.querySelector('.file-preview-container').appendChild(preview);
+    });
+
+    // Update form state
+    formState.images = files;
+    validateStep(currentStep);
+}
+
+// Add drag and drop handling
+function setupFileUpload() {
+    const container = document.querySelector('.file-upload-container');
+    if (!container) return;
+
+    const label = container.querySelector('.file-upload-label');
+    if (!label) return;
+
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        label.addEventListener(eventName, preventDefaults, false);
+    });
+
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+        label.addEventListener(eventName, highlight, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+        label.addEventListener(eventName, unhighlight, false);
+    });
+
+    function highlight() {
+        label.classList.add('dragover');
+    }
+
+    function unhighlight() {
+        label.classList.remove('dragover');
+    }
+
+    label.addEventListener('drop', handleDrop, false);
+
+    function handleDrop(e) {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        handleFileUpload(files);
     }
 }
 
