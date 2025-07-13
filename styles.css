@@ -38,15 +38,18 @@ body {
     position: fixed;
     top: 2rem;
     left: 2rem;
-    color: black;
+    color: #32CD32; /* Lime green */
     text-decoration: none;
     font-size: 2rem;
     z-index: 2;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 10px rgba(50, 205, 50, 0.5);
 }
 
 .back-arrow:hover {
     color: #32CD32; /* Lime green */
+    text-shadow: 0 0 20px rgba(50, 205, 50, 0.8), 0 0 30px rgba(50, 205, 50, 0.6);
+    transform: scale(1.1);
 }
 
 /* Main section styles */
@@ -174,26 +177,70 @@ span:nth-child(12):hover { background-image: url('https://github.com/esmesme/emt
   
 .popup {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     background-color: white;
-    padding: 1rem;
+    padding: 0;
     border-radius: 5px;
     box-shadow: 10px 10px 40px lime;
-    max-width: 80vw;
-    max-height: 80vh;
-    overflow: auto;
+    width: 250px;
+    height: 200px;
+    overflow: hidden;
+    cursor: default;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.drag-handle {
+    position: relative;
+    height: 25px;
+    background: linear-gradient(to bottom, #e0e0e0 0%, #d0d0d0 100%);
+    cursor: grab;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: #333;
+    border-bottom: 2px solid #b0b0b0;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    flex-shrink: 0;
+}
+
+.drag-handle:active {
+    cursor: grabbing;
 }
   
 .close-button {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 2px;
+    right: 5px;
     cursor: pointer;
-    padding: 0.5rem;
-    font-size: 0.7rem;
-    color: lime;
+    padding: 2px 6px;
+    font-size: 12px;
+    color: black;
+    background: none;
+    border: none;
+    font-weight: bold;
+}
+
+.close-button:hover {
+    background-color: #32CD32;
+    color: white;
+    border-radius: 3px;
+}
+
+.resize-handle {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 15px;
+    height: 15px;
+    cursor: nw-resize;
+    background: linear-gradient(45deg, transparent 30%, #ccc 30%, #ccc 70%, transparent 70%);
+}
+
+.resize-handle:hover {
+    background: linear-gradient(45deg, transparent 30%, #999 30%, #999 70%, transparent 70%);
 }
   
 .popup input[type="text"] {
@@ -202,14 +249,14 @@ span:nth-child(12):hover { background-image: url('https://github.com/esmesme/emt
     padding: 5px;
     margin-bottom: 5px;
 }
+
 .popup textarea {
     width: 100%;
-    margin-top: 30px;
+    height: 100%;
     padding: 15px;
-    margin-bottom: 5px;
-    min-height: 100px;
+    margin: 0;
     resize: none;
-    border: 1px solid black;
+    border: none;
     font-family: inherit;
     font-size: inherit;
     line-height: 1.5;
@@ -218,6 +265,8 @@ span:nth-child(12):hover { background-image: url('https://github.com/esmesme/emt
     word-wrap: break-word;
     overflow-wrap: break-word;
     box-sizing: border-box;
+    background-color: white;
+    flex: 1;
 }
 
 

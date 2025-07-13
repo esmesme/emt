@@ -43,11 +43,13 @@ function createPopup(message) {
   popup.style.left = `${x}px`;
   popup.style.top = `${y}px`;
 
-  // Set the pop-up's content
+  // Set the pop-up's content with drag handle and resize handle
   popup.innerHTML = `
-  <textarea>${message}</textarea>
-  <button class="close-button">Close</button>
-`;
+    <div class="drag-handle">⋮⋮</div>
+    <textarea>${message}</textarea>
+    <button class="close-button">X</button>
+    <div class="resize-handle"></div>
+  `;
 
   popupContainer.appendChild(popup);
 
@@ -55,6 +57,80 @@ function createPopup(message) {
   const closeButton = popup.querySelector(".close-button");
   closeButton.addEventListener("click", function() {
     popup.style.display = "none";
+  });
+
+  // Drag functionality
+  const dragHandle = popup.querySelector(".drag-handle");
+  let isDragging = false;
+  let dragOffsetX = 0;
+  let dragOffsetY = 0;
+
+  dragHandle.addEventListener("mousedown", function(e) {
+    isDragging = true;
+    dragOffsetX = e.clientX - popup.offsetLeft;
+    dragOffsetY = e.clientY - popup.offsetTop;
+    popup.style.cursor = "grabbing";
+    e.preventDefault();
+  });
+
+  document.addEventListener("mousemove", function(e) {
+    if (isDragging) {
+      const newX = e.clientX - dragOffsetX;
+      const newY = e.clientY - dragOffsetY;
+      
+      // Keep popup within window bounds
+      const maxX = window.innerWidth - popup.offsetWidth;
+      const maxY = window.innerHeight - popup.offsetHeight;
+      
+      popup.style.left = Math.max(0, Math.min(newX, maxX)) + "px";
+      popup.style.top = Math.max(0, Math.min(newY, maxY)) + "px";
+    }
+  });
+
+  document.addEventListener("mouseup", function() {
+    if (isDragging) {
+      isDragging = false;
+      popup.style.cursor = "default";
+    }
+  });
+
+  // Resize functionality
+  const resizeHandle = popup.querySelector(".resize-handle");
+  let isResizing = false;
+  let startWidth, startHeight, startX, startY;
+
+  resizeHandle.addEventListener("mousedown", function(e) {
+    isResizing = true;
+    startWidth = popup.offsetWidth;
+    startHeight = popup.offsetHeight;
+    startX = e.clientX;
+    startY = e.clientY;
+    e.preventDefault();
+  });
+
+  document.addEventListener("mousemove", function(e) {
+    if (isResizing) {
+      const deltaX = e.clientX - startX;
+      const deltaY = e.clientY - startY;
+      
+      const newWidth = Math.min(300, Math.max(200, startWidth + deltaX));
+      const newHeight = Math.min(300, Math.max(150, startHeight + deltaY));
+      
+      popup.style.width = newWidth + "px";
+      popup.style.height = newHeight + "px";
+      
+      // Force textarea to recalculate its size
+      const textarea = popup.querySelector("textarea");
+      if (textarea) {
+        textarea.style.height = (newHeight - 25) + "px"; // Subtract drag handle height
+      }
+    }
+  });
+
+  document.addEventListener("mouseup", function() {
+    if (isResizing) {
+      isResizing = false;
+    }
   });
 
   popup.style.display = "block";
