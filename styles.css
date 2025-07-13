@@ -5,6 +5,18 @@
     box-sizing: border-box;
 }
 
+.p5Canvas {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#defaultCanvas0 {
+    width: auto!important;
+    height: auto!important;
+}
+
 /* Set the background to black and make the page take up full viewport height */
 body {
     background-color: black;
@@ -39,23 +51,14 @@ body {
 
 /* Main section styles */
 .main-nav{
-    
     position: fixed;
-    top: 50vh; /* Position it halfway down the viewport */
-    left: 0;
-    right: 0;
-    padding: 2rem;
-    opacity: 0;
-    
-    z-index: 1000;
-    transform: translateY(20px);
-
- 
-}
-
-.main-nav.visible {
+    top: 2rem;
+    right: 2rem;
+    padding: 1rem;
     opacity: 1;
-    transform: translateY(0);
+    z-index: 1000;
+    display: flex;
+    gap: 1rem;
 }
 
 .main-nav a {
@@ -66,7 +69,6 @@ body {
     padding: 0.5rem 1rem;
     border-radius: 4px;
     background-color: white;
-    gap: 12rem; 
 }
 
 .main-nav a:hover {
@@ -158,7 +160,7 @@ span:nth-child(10):hover { background-image: url('https://github.com/esmesme/emt
 span:nth-child(11):hover { background-image: url('https://github.com/esmesme/emt/blob/main/textures/wood-grain/wood-grain-11.jpg'); }
 span:nth-child(12):hover { background-image: url('https://github.com/esmesme/emt/blob/main/textures/wood-grain/wood-grain-12.jpg'); }
 
-/*pop up styles*/
+/* Popup styles for testimonials */
 #popup-container {
     position: fixed;
     width: 100vw;
@@ -216,487 +218,26 @@ span:nth-child(12):hover { background-image: url('https://github.com/esmesme/emt
     overflow-wrap: break-word;
     box-sizing: border-box;
 }
-  
-/* Contact section styles */
-.contact-section {
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 2rem;
-    background-color: black;
-    color: white;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-    pointer-events: none;
-    position: relative;
-    z-index: 2;
-    margin-top: 100vh; /* Add this to position it below the main section */
-}
 
-.contact-section.visible {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-}
 
-/* Add styles for when the contact section is targeted by the URL hash */
-.contact-section:target {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-}
 
-.scrolling-text {
-    font-size: 1.5rem;
-    text-transform: uppercase;
-    margin-bottom: 4rem;
-    color: white;
-    opacity: 0;
-    transition: opacity 0.8s ease;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    text-align: center;
-}
-
-.scrolling-text.visible {
-    opacity: 1;
-}
-
-.scrolling-text.hide {
-    opacity: 0;
-}
-
-.start-button {
-    padding: 1rem 2rem;
-    background-color: transparent;
-    border: 1px solid white;
-    color: white;
-    font-family: inherit;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border-radius: 4px;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-    margin-bottom: 4rem;
-    position: fixed;
-    top: calc(50% + 4rem);
-    left: 50%;
-    transform: translate(-50%, 0);
-}
-
-.start-button.visible {
-    opacity: 1;
-    transform: translate(-50%, 0);
-}
-
-.start-button.hide {
-    opacity: 0;
-    transform: translate(-50%, 20px);
-}
-
-.start-button:hover {
-    background-color: white;
-    color: black;
-}
-
-.form-container {
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    position: fixed;
-    top: calc(50% + 4rem);
-    left: 50%;
-    transform: translate(-50%, 0);
-    z-index: 10; /* Add this to ensure it's above other elements */
-}
-
-.form-container.visible {
-    opacity: 1;
-}
-
-.formstep {
-    display: none;
-    padding: 2rem;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin: 2rem auto;
-    max-width: 600px;
-    min-height: 400px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.formstep.active {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-/* First step specific styles */
-.form-step:first-child {
-    background-color: transparent;
-    padding: 0;
-    gap: 1rem;
-}
-
-.form-step:first-child .step-prompt {
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-}
-
-.form-step:first-child .input-container {
-    width: 100%;
-    max-width: 400px;
-    margin: 0 auto;
-}
-
-.form-step:first-child .button-container {
-    margin-top: 1rem;
-}
-
-.step-prompt {
-    font-size: 1.2rem;
-    line-height: 1.5;
-    color: white;
-}
-
-/* Form validation styles */
-.input-container {
-    position: relative;
-    margin-bottom: 1rem;
-}
-
-.error-message {
-    color: #ff0000;
-    font-size: 0.8rem;
-    margin-top: 0.5rem;
-    padding: 0.5rem;
-    background-color: #fff5f5;
-    border-radius: 4px;
-    border: 1px solid #ff0000;
-}
-
-input.error,
-textarea.error {
-    border-color: #ff0000;
-    background-color: #fff5f5;
-}
-
-.char-counter {
-    text-align: right;
-    font-size: 0.8rem;
-    margin-top: 0.5rem;
-    color: #666;
-}
-
-.char-counter.warning {
-    color: #ff6b00;
-}
-
-.char-counter.error {
-    color: #ff0000;
-}
-
-/* File input styles */
-input[type="file"] {
-    width: 100%;
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: white;
-}
-
-input[type="file"]:hover {
-    border-color: #666;
-}
-
-input[type="file"]:focus {
-    outline: none;
-    border-color: #000;
-    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
-}
-
-/* Input and textarea styles */
-input[type="text"],
-input[type="email"],
-textarea {
-    width: 100%;
-    padding: 0.8rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;
-    transition: border-color 0.3s ease;
-}
-
-input[type="text"]:hover,
-input[type="email"]:hover,
-textarea:hover {
-    border-color: #666;
-}
-
-input[type="text"]:focus,
-input[type="email"]:focus,
-textarea:focus {
-    outline: none;
-    border-color: #000;
-    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
-}
-
-.form-button {
-    padding: 0.8rem 1.5rem;
-    background-color: transparent;
-    border: 1px solid white;
-    color: white;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-family: inherit;
-    font-size: 1rem;
-    margin: 0 0.5rem;
-    border-radius: 4px;
-}
-
-.form-button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    border-color: rgba(255, 255, 255, 0.3);
-}
-
-.form-button.enabled {
-    opacity: 1;
-    cursor: pointer;
-    border-color: white;
-}
-
-.form-button:hover:not(:disabled) {
-    background-color: white;
-    color: black;
-}
-
-.form-button.back {
-    border-color: rgba(255, 255, 255, 0.5);
-}
-
-.form-button.back:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-}
-
-/* Add specific styles for the submit button */
-.form-button.next:last-child {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-width: 2px;
-    font-weight: bold;
-}
-
-.form-button.next:last-child:hover:not(:disabled) {
-    background-color: white;
-    color: black;
-}
-
-/* Captcha container styles */
-.captcha-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 80px;
-    margin: 1rem 0;
-    padding: 1rem;
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
-    position: relative;
-}
-
-.captcha-container.error {
-    background-color: rgba(255, 0, 0, 0.1);
-    border: 1px solid rgba(255, 0, 0, 0.3);
-}
-
-.captcha-container .h-captcha {
-    transform: scale(0.9);
-    transform-origin: center;
-}
-
-/* Loading state for captcha */
-.captcha-container.loading::after {
-    content: 'Loading captcha...';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #666;
-    font-size: 0.9rem;
-}
-
-/* Responsive adjustments for captcha */
+/* Responsive design */
 @media (max-width: 768px) {
-    .captcha-container {
-        min-height: 100px;
+    .main-nav {
+        top: 1rem;
+        right: 1rem;
+        flex-direction: column;
+        gap: 0.5rem;
     }
     
-    .captcha-container .h-captcha {
-        transform: scale(0.8);
+    .main-nav a {
+        font-size: 1rem;
+        padding: 0.3rem 0.8rem;
     }
-}
-
-.success-message, .error-message {
-    padding: 2rem;
-    border-radius: 8px;
-    margin: 2rem auto;
-    max-width: 600px;
-    text-align: center;
-    font-size: 1.2rem;
-    line-height: 1.5;
-}
-
-.success-message {
-    background-color: rgba(76, 175, 80, 0.1);
-    border: 1px solid rgba(76, 175, 80, 0.3);
-    color: #4CAF50;
-}
-
-.error-message {
-    background-color: rgba(244, 67, 54, 0.1);
-    border: 1px solid rgba(244, 67, 54, 0.3);
-    color: #F44336;
-}
-  
-.p5Canvas {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-}
-
-#defaultCanvas0 {
-    width: auto!important;
-    height: auto!important;
-   display: none; /* Hide the canvas initially */
-   position: relative; /* Position it relative to its normal position */
-   top: 100vh; /* Move it down by the full viewport height */ 
-}
-
-/* File upload styles */
-.file-upload-container {
-    position: relative;
-    margin: 1rem 0;
-}
-
-.file-upload-label {
-    display: block;
-    padding: 1rem;
-    border: 2px dashed #ccc;
-    border-radius: 4px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.file-upload-label:hover {
-    border-color: #666;
-    background-color: rgba(255, 255, 255, 0.05);
-}
-
-.file-upload-label.dragover {
-    border-color: #000;
-    background-color: rgba(0, 0, 0, 0.1);
-}
-
-.file-preview-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 1rem;
-    margin-top: 1rem;
-}
-
-.file-preview {
-    position: relative;
-    aspect-ratio: 1;
-    border-radius: 4px;
-    overflow: hidden;
-}
-
-.file-preview img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.file-preview .remove-button {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    background: rgba(255, 0, 0, 0.7);
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-}
-
-.file-upload-progress {
-    margin-top: 1rem;
-    height: 4px;
-    background-color: #eee;
-    border-radius: 2px;
-    overflow: hidden;
-}
-
-.file-upload-progress-bar {
-    height: 100%;
-    background-color: #000;
-    transition: width 0.3s ease;
-}
-
-/* Loading states */
-.loading {
-    position: relative;
-    pointer-events: none;
-}
-
-.loading::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.1);
-    animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-    0% { opacity: 0.5; }
-    50% { opacity: 0.8; }
-    100% { opacity: 0.5; }
-}
-
-/*
-#startButton {
     
-    position: absolute;
-    top: 20px;
-    left: 20px;
-  z-index: 4;
-  
+    h1, h2 {
+        font-size: 12vw;
+    }
 }
   
   

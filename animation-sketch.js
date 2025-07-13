@@ -91,4 +91,4 @@ class Worm {
     strokeWeight(2);
     text(this.text, this.x, this.y);
   }
-}
+} 

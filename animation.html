@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fun Exciting News - Esme Made This</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="p5.min.js"></script>
+    <script src="animation-sketch.js"></script>
+</head>
+<body>
+    <a href="index.html" class="back-arrow">←</a>
+    
+    <div id="defaultcanvas0">
+        <!-- Canvas will be created here by p5.js -->
+    </div>
+
+    <script>
+        // Start the animation immediately when this page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Start the animation
+            if (typeof startAnimation === 'function') {
+                startAnimation();
+            }
+            
+            // Make canvas visible
+            const canvas = document.getElementById('defaultcanvas0');
+            if (canvas) {
+                canvas.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html> 
