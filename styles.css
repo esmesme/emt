@@ -41,7 +41,7 @@ body {
     color: #32CD32; /* Lime green */
     text-decoration: none;
     font-size: 2rem;
-    z-index: 2;
+    z-index: 1000;
     transition: all 0.3s ease;
     text-shadow: 0 0 10px rgba(50, 205, 50, 0.5);
 }
@@ -271,6 +271,64 @@ span:nth-child(12):hover { background-image: url('https://github.com/esmesme/emt
 
 
 
+/* TL;DR page styles */
+.tldr-page {
+    background-color: white;
+    color: black;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.tldr-container {
+    position: relative;
+    z-index: 10;
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 2rem;
+    padding-top: 4rem;
+}
+
+.tldr-content {
+    max-width: 800px;
+    width: 100%;
+    text-align: center;
+    padding: 3rem;
+}
+
+.tldr-content h1 {
+    font-size: 4rem;
+    color: black;
+    margin-bottom: 2rem;
+    font-weight: bold;
+}
+
+.tldr-list {
+    text-align: left;
+    font-size: 1.5rem;
+    line-height: 1.8;
+    color: black;
+    list-style-position: inside;
+    padding-left: 0;
+}
+
+.tldr-list li {
+    margin-bottom: 1.5rem;
+    padding-left: 1rem;
+    text-indent: -1rem;
+}
+
+#background-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
     .main-nav {
@@ -287,6 +345,20 @@ span:nth-child(12):hover { background-image: url('https://github.com/esmesme/emt
     
     h1, h2 {
         font-size: 12vw;
+    }
+    
+    .tldr-content {
+        padding: 2rem 1rem;
+        margin: 1rem;
+    }
+    
+    .tldr-content h1 {
+        font-size: 2.5rem;
+    }
+    
+    .tldr-list {
+        font-size: 1.2rem;
+        line-height: 1.6;
     }
 }
   
