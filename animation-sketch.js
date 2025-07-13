@@ -43,11 +43,11 @@ function startAnimation() {
 class Worm {
   constructor() {
     this.x = random(50, windowWidth - 50); // Initial x position
-    this.y = random(windowHeight - 50, windowHeight - 50); // Initial y position
+    this.y = random(50, 100); // Initial y position - start from top
     this.speed = random(1, 3); // Speed of movement
     this.text = random(["Now accepting cryptocurrency payments"]); // Random text
     this.angle = random(-PI, PI); // Initial angle of movement
-    this.verticalSpeed = random(-4, 4); // Random vertical speed
+    this.verticalSpeed = random(1, 4); // Positive vertical speed to move downward
   }
 
   update(allWorms) {
