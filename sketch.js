@@ -45,7 +45,7 @@ class Worm {
     this.x = random(50, 550); // Initial x position
     this.y = random(550, 550); // Initial y position
     this.speed = random(1, 3); // Speed of movement
-    this.text = random(["esme made this"]); // Random text
+    this.text = random(["Now accepting cryptocurrency payments"]); // Random text
     this.angle = random(-PI, PI); // Initial angle of movement
     this.verticalSpeed = random(-4, 4); // Random vertical speed
   }

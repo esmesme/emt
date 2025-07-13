@@ -10,7 +10,7 @@ function setup() {
   yellowColor = color(250, 250, 124);
   redColor = color('#2B056F')
 
-  createCanvas(600, 600);
+  createCanvas(windowWidth, windowHeight);
   frameRate(25);
   background('rgb(255,255,247)');
 
@@ -42,10 +42,10 @@ function startAnimation() {
 // Worm class
 class Worm {
   constructor() {
-    this.x = random(50, 550); // Initial x position
-    this.y = random(550, 550); // Initial y position
+    this.x = random(50, windowWidth - 50); // Initial x position
+    this.y = random(windowHeight - 50, windowHeight - 50); // Initial y position
     this.speed = random(1, 3); // Speed of movement
-    this.text = random(["esme made this"]); // Random text
+    this.text = random(["Now accepting cryptocurrency payments"]); // Random text
     this.angle = random(-PI, PI); // Initial angle of movement
     this.verticalSpeed = random(-4, 4); // Random vertical speed
   }
