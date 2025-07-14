@@ -38,17 +38,17 @@ body {
     position: fixed;
     top: 2rem;
     left: 2rem;
-    color: #32CD32; /* Lime green */
+    color: #383e4e; /* Dark gray */
     text-decoration: none;
     font-size: 2rem;
     z-index: 1000;
     transition: all 0.3s ease;
-    text-shadow: 0 0 10px rgba(50, 205, 50, 0.5);
+    text-shadow: 0 0 10px rgba(56, 62, 78, 0.5);
 }
 
 .back-arrow:hover {
-    color: #32CD32; /* Lime green */
-    text-shadow: 0 0 20px rgba(50, 205, 50, 0.8), 0 0 30px rgba(50, 205, 50, 0.6);
+    color: #383e4e; /* Dark gray */
+    text-shadow: 0 0 20px rgba(56, 62, 78, 0.8), 0 0 30px rgba(56, 62, 78, 0.6);
     transform: scale(1.1);
 }
 
@@ -334,8 +334,8 @@ span:nth-child(12):hover { background-image: url('https://github.com/esmesme/emt
     background-color: #b6bac5;
     color: #383e4e;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden;
+    height: 100vh;
 }
 
 .email-container {
@@ -343,10 +343,32 @@ span:nth-child(12):hover { background-image: url('https://github.com/esmesme/emt
     z-index: 10;
     min-height: 100vh;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     padding: 2rem;
     padding-top: 4rem;
+}
+
+.typing-container {
+    margin-bottom: 4rem;
+    margin-top: 2rem;
+    text-align: center;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+#typing-text {
+    font-size: 1.5rem;
+    color: #383e4e;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    line-height: 1.4;
+    max-width: 600px;
+    text-align: center;
 }
 
 .email-letters {

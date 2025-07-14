@@ -1,3 +1,25 @@
+// Typed.js functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize typed.js
+    const typed = new Typed('#typing-text', {
+        strings: [
+            'Ready to bring your vision to life?',
+            'Let\'s create something amazing together.',
+            'I\'d love to hear from you',
+            'Share your ideas with me along with pictures and inspirational images',
+            'Your dream project starts with an email.'
+        ],
+        typeSpeed: 50,
+        backSpeed: 30,
+        backDelay: 2000,
+        startDelay: 1000,
+        loop: true,
+        showCursor: true,
+        cursorChar: '|',
+        autoInsertCss: true
+    });
+});
+
 // Enhanced oscillating dots background
 document.addEventListener('DOMContentLoaded', function() {
     const letters = document.querySelectorAll('.letter');
@@ -41,9 +63,9 @@ document.addEventListener('DOMContentLoaded', function() {
         ctx.fillStyle = '#b6bac5';
         ctx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
         
-        // Draw oscillating dots in rows
+        // Draw oscillating dots in rows - positioned lower to align with email
         for (let row = 0; row < rowCount; row++) {
-            const y = bgCanvas.height / 2 - ((rowCount - 1) / 2) * spacing + row * spacing;
+            const y = bgCanvas.height * 0.6 - ((rowCount - 1) / 2) * spacing + row * spacing;
             
             for (let i = 0; i < dotCount; i++) {
                 // Calculate x-position with spacing
