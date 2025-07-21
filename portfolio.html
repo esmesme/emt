@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Esme Made This</title>
+    <link rel="stylesheet" href="portfolio-styles.css">
+    <script src="portfolio-script.js" defer></script>
+</head>
+<body class="win95-desktop">
+    <a href="index.html" class="back-arrow">←</a>
+    
+    <!-- Desktop Icons -->
+    <div class="desktop-icons">
+        <div class="desktop-icon" data-project="kitchen-renovation">
+            <div class="icon-image"><img src="icons/icon-folder.png" alt="Folder"></div>
+            <div class="icon-label">Kitchen Renovation</div>
+        </div>
+        
+        <div class="desktop-icon" data-project="built-in-closet">
+            <div class="icon-image"><img src="icons/icon-folder.png" alt="Folder"></div>
+            <div class="icon-label">Built-in Closet</div>
+        </div>
+        
+        <div class="desktop-icon" data-project="pantry-system">
+            <div class="icon-image"><img src="icons/icon-folder.png" alt="Folder"></div>
+            <div class="icon-label">Pantry System</div>
+        </div>
+        
+        <div class="desktop-icon" data-project="custom-shelving">
+            <div class="icon-image"><img src="icons/icon-folder.png" alt="Folder"></div>
+            <div class="icon-label">Custom Shelving</div>
+        </div>
+    </div>
+    
+    <!-- Taskbar -->
+    <div class="taskbar">
+        <div class="start-button">
+            <div class="start-icon"><img src="icons/icon-start.jpg" alt="Start"></div>
+            <span>Start</span>
+        </div>
+        <div class="taskbar-items">
+            <div class="taskbar-item active">Portfolio</div>
+        </div>
+        <div class="system-tray">
+            <span class="time">7:53 PM</span>
+        </div>
+    </div>
+    
+    <!-- Project Windows -->
+    <div class="window-container" id="kitchen-renovation-window" style="display: none;">
+        <div class="window">
+            <div class="window-titlebar">
+                <div class="window-title">Kitchen Renovation</div>
+                <div class="window-controls">
+                    <div class="window-control minimize">_</div>
+                    <div class="window-control maximize">□</div>
+                    <div class="window-control close">×</div>
+                </div>
+            </div>
+            <div class="window-menu">
+                <span>File</span>
+                <span>Edit</span>
+                <span>View</span>
+                <span>Help</span>
+            </div>
+            <div class="window-content">
+                <div class="folder-item" data-gallery="kitchen-images">
+                    <div class="folder-icon"><img src="icons/icon-folder.png" alt="Folder"></div>
+                    <div class="folder-label">Images</div>
+                </div>
+                <div class="folder-item" data-readme="kitchen-readme">
+                    <div class="folder-icon"><img src="icons/readme.png" alt="Text File"></div>
+                    <div class="folder-label">README</div>
+                </div>
+            </div>
+            <div class="window-statusbar">
+                <span>2 object(s)</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="window-container" id="built-in-closet-window" style="display: none;">
+        <div class="window">
+            <div class="window-titlebar">
+                <div class="window-title">Built-in Closet</div>
+                <div class="window-controls">
+                    <div class="window-control minimize">_</div>
+                    <div class="window-control maximize">□</div>
+                    <div class="window-control close">×</div>
+                </div>
+            </div>
+            <div class="window-menu">
+                <span>File</span>
+                <span>Edit</span>
+                <span>View</span>
+                <span>Help</span>
+            </div>
+            <div class="window-content">
+                <div class="folder-item" data-gallery="closet-images">
+                    <div class="folder-icon"><img src="icons/icon-folder.png" alt="Folder"></div>
+                    <div class="folder-label">Images</div>
+                </div>
+                <div class="folder-item" data-readme="closet-readme">
+                    <div class="folder-icon"><img src="icons/readme.png" alt="Text File"></div>
+                    <div class="folder-label">README</div>
+                </div>
+            </div>
+            <div class="window-statusbar">
+                <span>2 object(s)</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="window-container" id="pantry-system-window" style="display: none;">
+        <div class="window">
+            <div class="window-titlebar">
+                <div class="window-title">Pantry System</div>
+                <div class="window-controls">
+                    <div class="window-control minimize">_</div>
+                    <div class="window-control maximize">□</div>
+                    <div class="window-control close">×</div>
+                </div>
+            </div>
+            <div class="window-menu">
+                <span>File</span>
+                <span>Edit</span>
+                <span>View</span>
+                <span>Help</span>
+            </div>
+            <div class="window-content">
+                <div class="folder-item" data-gallery="pantry-images">
+                    <div class="folder-icon"><img src="icons/icon-folder.png" alt="Folder"></div>
+                    <div class="folder-label">Images</div>
+                </div>
+                <div class="folder-item" data-readme="pantry-readme">
+                    <div class="folder-icon"><img src="icons/readme.png" alt="Text File"></div>
+                    <div class="folder-label">README</div>
+                </div>
+            </div>
+            <div class="window-statusbar">
+                <span>2 object(s)</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="window-container" id="custom-shelving-window" style="display: none;">
+        <div class="window">
+            <div class="window-titlebar">
+                <div class="window-title">Custom Shelving</div>
+                <div class="window-controls">
+                    <div class="window-control minimize">_</div>
+                    <div class="window-control maximize">□</div>
+                    <div class="window-control close">×</div>
+                </div>
+            </div>
+            <div class="window-menu">
+                <span>File</span>
+                <span>Edit</span>
+                <span>View</span>
+                <span>Help</span>
+            </div>
+            <div class="window-content">
+                <div class="folder-item" data-gallery="shelving-images">
+                    <div class="folder-icon"><img src="icons/icon-folder.png" alt="Folder"></div>
+                    <div class="folder-label">Images</div>
+                </div>
+                <div class="folder-item" data-readme="shelving-readme">
+                    <div class="folder-icon"><img src="icons/readme.png" alt="Text File"></div>
+                    <div class="folder-label">README</div>
+                </div>
+            </div>
+            <div class="window-statusbar">
+                <span>2 object(s)</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Image Gallery Windows -->
+    <div class="gallery-window" id="kitchen-images-gallery" style="display: none;">
+        <div class="window">
+            <div class="window-titlebar">
+                <div class="window-title">Kitchen Renovation - Images</div>
+                <div class="window-controls">
+                    <div class="window-control minimize">_</div>
+                    <div class="window-control maximize">□</div>
+                    <div class="window-control close">×</div>
+                </div>
+            </div>
+            <div class="window-menu">
+                <span>File</span>
+                <span>Edit</span>
+                <span>View</span>
+                <span>Help</span>
+            </div>
+            <div class="window-content gallery-content">
+                <div class="back-button" data-back-to="kitchen-renovation-window">← Back to Kitchen Renovation</div>
+                <div class="gallery-grid">
+                    <div class="gallery-item" data-image="[KITCHEN_IMAGE_1]">
+                        <div class="image-placeholder">[KITCHEN_IMAGE_1]</div>
+                        <div class="image-label">Kitchen Before</div>
+                    </div>
+                    <div class="gallery-item" data-image="[KITCHEN_IMAGE_2]">
+                        <div class="image-placeholder">[KITCHEN_IMAGE_2]</div>
+                        <div class="image-label">Kitchen After</div>
+                    </div>
+                    <div class="gallery-item" data-image="[KITCHEN_IMAGE_3]">
+                        <div class="image-placeholder">[KITCHEN_IMAGE_3]</div>
+                        <div class="image-label">Cabinet Detail</div>
+                    </div>
+                </div>
+            </div>
+            <div class="window-statusbar">
+                <span>3 object(s)</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="gallery-window" id="closet-images-gallery" style="display: none;">
+        <div class="window">
+            <div class="window-titlebar">
+                <div class="window-title">Built-in Closet - Images</div>
+                <div class="window-controls">
+                    <div class="window-control minimize">_</div>
+                    <div class="window-control maximize">□</div>
+                    <div class="window-control close">×</div>
+                </div>
+            </div>
+            <div class="window-menu">
+                <span>File</span>
+                <span>Edit</span>
+                <span>View</span>
+                <span>Help</span>
+            </div>
+            <div class="window-content gallery-content">
+                <div class="back-button" data-back-to="built-in-closet-window">← Back to Built-in Closet</div>
+                <div class="gallery-grid">
+                    <div class="gallery-item" data-image="[CLOSET_IMAGE_1]">
+                        <div class="image-placeholder">[CLOSET_IMAGE_1]</div>
+                        <div class="image-label">Closet Overview</div>
+                    </div>
+                    <div class="gallery-item" data-image="[CLOSET_IMAGE_2]">
+                        <div class="image-placeholder">[CLOSET_IMAGE_2]</div>
+                        <div class="image-label">Shelf Detail</div>
+                    </div>
+                    <div class="gallery-item" data-image="[CLOSET_IMAGE_3]">
+                        <div class="image-placeholder">[CLOSET_IMAGE_3]</div>
+                        <div class="image-label">Hanging Rod</div>
+                    </div>
+                </div>
+            </div>
+            <div class="window-statusbar">
+                <span>3 object(s)</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="gallery-window" id="pantry-images-gallery" style="display: none;">
+        <div class="window">
+            <div class="window-titlebar">
+                <div class="window-title">Pantry System - Images</div>
+                <div class="window-controls">
+                    <div class="window-control minimize">_</div>
+                    <div class="window-control maximize">□</div>
+                    <div class="window-control close">×</div>
+                </div>
+            </div>
+            <div class="window-menu">
+                <span>File</span>
+                <span>Edit</span>
+                <span>View</span>
+                <span>Help</span>
+            </div>
+            <div class="window-content gallery-content">
+                <div class="back-button" data-back-to="pantry-system-window">← Back to Pantry System</div>
+                <div class="gallery-grid">
+                    <div class="gallery-item" data-image="[PANTRY_IMAGE_1]">
+                        <div class="image-placeholder">[PANTRY_IMAGE_1]</div>
+                        <div class="image-label">Pantry Overview</div>
+                    </div>
+                    <div class="gallery-item" data-image="[PANTRY_IMAGE_2]">
+                        <div class="image-placeholder">[PANTRY_IMAGE_2]</div>
+                        <div class="image-label">Pull-out Shelves</div>
+                    </div>
+                    <div class="gallery-item" data-image="[PANTRY_IMAGE_3]">
+                        <div class="image-placeholder">[PANTRY_IMAGE_3]</div>
+                        <div class="image-label">Storage Bins</div>
+                    </div>
+                </div>
+            </div>
+            <div class="window-statusbar">
+                <span>3 object(s)</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="gallery-window" id="shelving-images-gallery" style="display: none;">
+        <div class="window">
+            <div class="window-titlebar">
+                <div class="window-title">Custom Shelving - Images</div>
+                <div class="window-controls">
+                    <div class="window-control minimize">_</div>
+                    <div class="window-control maximize">□</div>
+                    <div class="window-control close">×</div>
+                </div>
+            </div>
+            <div class="window-menu">
+                <span>File</span>
+                <span>Edit</span>
+                <span>View</span>
+                <span>Help</span>
+            </div>
+            <div class="window-content gallery-content">
+                <div class="back-button" data-back-to="custom-shelving-window">← Back to Custom Shelving</div>
+                <div class="gallery-grid">
+                    <div class="gallery-item" data-image="[SHELVING_IMAGE_1]">
+                        <div class="image-placeholder">[SHELVING_IMAGE_1]</div>
+                        <div class="image-label">Living Room Shelves</div>
+                    </div>
+                    <div class="gallery-item" data-image="[SHELVING_IMAGE_2]">
+                        <div class="image-placeholder">[SHELVING_IMAGE_2]</div>
+                        <div class="image-label">Office Storage</div>
+                    </div>
+                    <div class="gallery-item" data-image="[SHELVING_IMAGE_3]">
+                        <div class="image-placeholder">[SHELVING_IMAGE_3]</div>
+                        <div class="image-label">Display Shelves</div>
+                    </div>
+                </div>
+            </div>
+            <div class="window-statusbar">
+                <span>3 object(s)</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- README Windows -->
+    <div class="readme-window" id="kitchen-readme" style="display: none;">
+        <div class="window">
+            <div class="window-titlebar">
+                <div class="window-title">Kitchen Renovation - README</div>
+                <div class="window-controls">
+                    <div class="window-control minimize">_</div>
+                    <div class="window-control maximize">□</div>
+                    <div class="window-control close">×</div>
+                </div>
+            </div>
+            <div class="window-menu">
+                <span>File</span>
+                <span>Edit</span>
+                <span>View</span>
+                <span>Help</span>
+            </div>
+            <div class="window-content readme-content">
+                <div class="back-button" data-back-to="kitchen-renovation-window">← Back to Kitchen Renovation</div>
+                <div class="readme-text">
+                    <h3>Kitchen Renovation Project</h3>
+                    <p><strong>Client:</strong> Atlanta Family Home</p>
+                    <p><strong>Project Type:</strong> Complete kitchen renovation with custom cabinetry</p>
+                    <p><strong>Timeline:</strong> 6 weeks</p>
+                    <p><strong>Materials:</strong> Solid maple cabinets, quartz countertops, soft-close hardware</p>
+                    <p><strong>Features:</strong></p>
+                    <ul>
+                        <li>Custom pantry with pull-out shelves</li>
+                        <li>Built-in spice rack</li>
+                        <li>Hidden trash and recycling bins</li>
+                        <li>Under-cabinet lighting</li>
+                        <li>Custom range hood enclosure</li>
+                    </ul>
+                    <p><strong>Challenges:</strong> Working around existing plumbing and electrical while maximizing storage space.</p>
+                    <p><strong>Result:</strong> Transformed cramped kitchen into functional, beautiful space with 40% more storage.</p>
+                </div>
+            </div>
+            <div class="window-statusbar">
+                <span>1 object(s)</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="readme-window" id="closet-readme" style="display: none;">
+        <div class="window">
+            <div class="window-titlebar">
+                <div class="window-title">Built-in Closet - README</div>
+                <div class="window-controls">
+                    <div class="window-control minimize">_</div>
+                    <div class="window-control maximize">□</div>
+                    <div class="window-control close">×</div>
+                </div>
+            </div>
+            <div class="window-menu">
+                <span>File</span>
+                <span>Edit</span>
+                <span>View</span>
+                <span>Help</span>
+            </div>
+            <div class="window-content readme-content">
+                <div class="back-button" data-back-to="built-in-closet-window">← Back to Built-in Closet</div>
+                <div class="readme-text">
+                    <h3>Built-in Closet Project</h3>
+                    <p><strong>Client:</strong> Buckhead Residence</p>
+                    <p><strong>Project Type:</strong> Master bedroom closet system</p>
+                    <p><strong>Timeline:</strong> 3 weeks</p>
+                    <p><strong>Materials:</strong> Premium plywood, solid wood trim, premium hardware</p>
+                    <p><strong>Features:</strong></p>
+                    <ul>
+                        <li>Double hanging rods with different heights</li>
+                        <li>Built-in shoe storage</li>
+                        <li>Pull-out tie and belt organizer</li>
+                        <li>Custom jewelry drawer with felt lining</li>
+                        <li>Integrated lighting</li>
+                    </ul>
+                    <p><strong>Challenges:</strong> Working with limited space while creating maximum functionality.</p>
+                    <p><strong>Result:</strong> Organized, elegant closet that maximizes every inch of space.</p>
+                </div>
+            </div>
+            <div class="window-statusbar">
+                <span>1 object(s)</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="readme-window" id="pantry-readme" style="display: none;">
+        <div class="window">
+            <div class="window-titlebar">
+                <div class="window-title">Pantry System - README</div>
+                <div class="window-controls">
+                    <div class="window-control minimize">_</div>
+                    <div class="window-control maximize">□</div>
+                    <div class="window-control close">×</div>
+                </div>
+            </div>
+            <div class="window-menu">
+                <span>File</span>
+                <span>Edit</span>
+                <span>View</span>
+                <span>Help</span>
+            </div>
+            <div class="window-content readme-content">
+                <div class="back-button" data-back-to="pantry-system-window">← Back to Pantry System</div>
+                <div class="readme-text">
+                    <h3>Pantry System Project</h3>
+                    <p><strong>Client:</strong> Decatur Family</p>
+                    <p><strong>Project Type:</strong> Custom pantry organization system</p>
+                    <p><strong>Timeline:</strong> 2 weeks</p>
+                    <p><strong>Materials:</strong> Baltic birch plywood, food-safe finishes, heavy-duty slides</p>
+                    <p><strong>Features:</strong></p>
+                    <ul>
+                        <li>Pull-out shelves for easy access</li>
+                        <li>Custom storage bins for bulk items</li>
+                        <li>Spice rack with magnetic closures</li>
+                        <li>Baking sheet organizer</li>
+                        <li>Wine bottle storage</li>
+                    </ul>
+                    <p><strong>Challenges:</strong> Creating efficient storage in a narrow space.</p>
+                    <p><strong>Result:</strong> Organized pantry that makes meal prep efficient and enjoyable.</p>
+                </div>
+            </div>
+            <div class="window-statusbar">
+                <span>1 object(s)</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="readme-window" id="shelving-readme" style="display: none;">
+        <div class="window">
+            <div class="window-titlebar">
+                <div class="window-title">Custom Shelving - README</div>
+                <div class="window-controls">
+                    <div class="window-control minimize">_</div>
+                    <div class="window-control maximize">□</div>
+                    <div class="window-control close">×</div>
+                </div>
+            </div>
+            <div class="window-menu">
+                <span>File</span>
+                <span>Edit</span>
+                <span>View</span>
+                <span>Help</span>
+            </div>
+            <div class="window-content readme-content">
+                <div class="back-button" data-back-to="custom-shelving-window">← Back to Custom Shelving</div>
+                <div class="readme-text">
+                    <h3>Custom Shelving Project</h3>
+                    <p><strong>Client:</strong> Various Atlanta Homes</p>
+                    <p><strong>Project Type:</strong> Custom shelving and storage solutions</p>
+                    <p><strong>Timeline:</strong> 1-3 weeks per project</p>
+                    <p><strong>Materials:</strong> Solid wood, plywood, metal brackets, various finishes</p>
+                    <p><strong>Features:</strong></p>
+                    <ul>
+                        <li>Floating shelves with hidden brackets</li>
+                        <li>Built-in bookcases</li>
+                        <li>Display shelves for collectibles</li>
+                        <li>Office storage solutions</li>
+                        <li>Media center organization</li>
+                    </ul>
+                    <p><strong>Challenges:</strong> Creating functional storage that enhances room aesthetics.</p>
+                    <p><strong>Result:</strong> Beautiful, functional storage that becomes part of the room's design.</p>
+                </div>
+            </div>
+            <div class="window-statusbar">
+                <span>1 object(s)</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Image Viewer Modal -->
+    <div class="image-viewer" id="image-viewer" style="display: none;">
+        <div class="image-viewer-content">
+            <div class="image-viewer-header">
+                <span class="image-viewer-title">Image Viewer</span>
+                <div class="image-viewer-controls">
+                    <div class="image-viewer-control close">×</div>
+                </div>
+            </div>
+            <div class="image-viewer-body">
+                <img id="viewer-image" src="" alt="Project Image">
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
