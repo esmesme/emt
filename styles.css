@@ -53,35 +53,50 @@ body {
 }
 
 /* Main section styles */
-.main-nav{
-    position: fixed;
-    top: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 1rem;
-    opacity: 1;
-    z-index: 1000;
+.main-header {
     display: flex;
-    gap: 1rem;
+    flex-direction: column;
+    align-items: center;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.main-nav {
+    position: static;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    gap: 0;
+    padding: 0.5rem 0 0 0;
+    background: none;
+    max-width: none;
+    left: unset;
+    top: unset;
+    transform: none;
 }
 
 .main-nav a {
-    color: black;
+    color: white;
+    background-color: black;
+    border: 2px solid white;
+    border-radius: 0; /* Remove rounded corners */
     text-decoration: none;
     font-size: 1.2rem;
     text-transform: lowercase;
     padding: 0.5rem 1rem;
-    border-radius: 4px;
-    background-color: white;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .main-nav a:hover {
-    background-color: #9595ff; /* Lilac purple */
+    background-color: white;
     color: black;
+    border: 2px solid black;
 }
 
 /* Container for the text */
 .container {
+    width: 100%;
     text-align: center;
     padding: 20px;
     min-height: 100vh;
@@ -417,13 +432,23 @@ span:nth-child(12):hover { background-image: url('https://github.com/esmesme/emt
     padding: 0 0.5rem;
 }
 
+.no-break {
+    white-space: nowrap;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
+    .main-header {
+        width: 100vw;
+        max-width: 100vw;
+    }
     .main-nav {
-        top: 1rem;
-        right: 1rem;
         flex-direction: column;
+        width: 100vw;
+        align-items: center;
+        justify-content: flex-start;
         gap: 0.5rem;
+        padding: 0;
     }
     
     .main-nav a {
