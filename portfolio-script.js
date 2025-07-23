@@ -16,34 +16,17 @@ function initializeDesktopIcons() {
     const desktopIcons = document.querySelectorAll('.desktop-icon');
     
     desktopIcons.forEach(icon => {
-        let clickTimeout;
-        let clickCount = 0;
-        
         icon.addEventListener('click', function(e) {
-            clickCount++;
+            // First show selection visual
+            selectIcon(this);
             
-            if (clickCount === 1) {
-                clickTimeout = setTimeout(() => {
-                    // Single click - select the icon
-                    selectIcon(this);
-                    clickCount = 0;
-                }, 200);
-            } else {
-                // Double click - open the window
-                clearTimeout(clickTimeout);
-                clickCount = 0;
+            // Then open the window after a brief delay to simulate the selection-to-open flow
+            setTimeout(() => {
                 const project = this.getAttribute('data-project');
                 openProjectWindow(project);
                 this.classList.add('open');
                 this.classList.remove('selected');
-            }
-        });
-        
-        // Prevent double click from triggering single click
-        icon.addEventListener('dblclick', function(e) {
-            e.preventDefault();
-            clearTimeout(clickTimeout);
-            clickCount = 0;
+            }, 150); // Brief delay to show selection
         });
     });
 }
