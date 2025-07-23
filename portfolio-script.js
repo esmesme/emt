@@ -95,22 +95,12 @@ function initializeWindows() {
     // Folder items in project windows
     const folderItems = document.querySelectorAll('.folder-item');
     folderItems.forEach(item => {
-        let clickTimeout;
-        let clickCount = 0;
-        
         item.addEventListener('click', function(e) {
-            clickCount++;
+            // First show selection visual
+            selectFolderItem(this);
             
-            if (clickCount === 1) {
-                clickTimeout = setTimeout(() => {
-                    // Single click - select the item
-                    selectFolderItem(this);
-                    clickCount = 0;
-                }, 200);
-            } else {
-                // Double click - open the item
-                clearTimeout(clickTimeout);
-                clickCount = 0;
+            // Then open the item after a brief delay to simulate the selection-to-open flow
+            setTimeout(() => {
                 const gallery = this.getAttribute('data-gallery');
                 const readme = this.getAttribute('data-readme');
                 
@@ -121,14 +111,7 @@ function initializeWindows() {
                 }
                 this.classList.add('open');
                 this.classList.remove('selected');
-            }
-        });
-        
-        // Prevent double click from triggering single click
-        item.addEventListener('dblclick', function(e) {
-            e.preventDefault();
-            clearTimeout(clickTimeout);
-            clickCount = 0;
+            }, 150); // Brief delay to show selection
         });
     });
 }
