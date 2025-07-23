@@ -113,8 +113,8 @@ function createPopup(message) {
       const deltaX = e.clientX - startX;
       const deltaY = e.clientY - startY;
       
-      const newWidth = Math.min(300, Math.max(200, startWidth + deltaX));
-      const newHeight = Math.min(300, Math.max(150, startHeight + deltaY));
+      const newWidth = Math.min(1200, Math.max(200, startWidth + deltaX));
+      const newHeight = Math.min(1200, Math.max(150, startHeight + deltaY));
       
       popup.style.width = newWidth + "px";
       popup.style.height = newHeight + "px";
@@ -138,7 +138,15 @@ function createPopup(message) {
 
 // Display pop-ups at different times
 for (let i = 0; i < 100; i++) {
+  let delay;
+  if (i === 0) {
+    delay = 0;
+  } else if (i === 1) {
+    delay = 1000; // half the normal interval
+  } else {
+    delay = 1000 + (i - 1) * 2000; // normal interval for the rest
+  }
   setTimeout(function() {
     createPopup(messages[i % messages.length]);
-  }, i * 2000);
+  }, delay);
 }

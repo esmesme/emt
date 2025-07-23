@@ -203,6 +203,8 @@ span:nth-child(12):hover { background-image: url('https://github.com/esmesme/emt
     user-select: none;
     display: flex;
     flex-direction: column;
+    max-width: 1200px;
+    max-height: 1200px;
 }
 
 .drag-handle {
